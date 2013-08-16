@@ -3,13 +3,27 @@
 		<title>Collaborative Sounds</title>
 	</head>
 	<body>
+		<div id = "participate">
+			<form = "participation" action = "void" method = "post">
+				<input type = "button" name = "participate" value = "paticipate" />
+				<input type = "button" name = "listen" value = "just listen" />
+			</form>
+		</div>
+		<div id = "loggin">
+			<form = "login" action = "void" method = "post">
+				Username: <input type = "text" name = "user" /> <br/>
+				Room*: <input type = "text" name = "room" /> <br/>
+				*optional <br/>
+				<input type = "button" name = "blogin" value = "go" />
+			</form>
+		</div>
 		<div id = "chat">
 			<div id = "chatter">
 			</div>
 			<div id = "typing">
 				<form name="catbox" action="void" method="post">
 					<input type = "text" name = "text" />
-					<input type = "button" value = "chat" />
+					<input type = "button" name = "submit" value = "chat" />
 				</form>
 			</div>
 		</div>
