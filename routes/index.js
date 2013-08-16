@@ -1,8 +1,11 @@
+var fs = require('fs');
 
-/*
- * GET home page.
- */
-
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
-};
+module.exports = function(app,io){
+// Read other files in dir
+var files = fs.readdirSync(__dirname);
+for(var i = 0; i < files.length; i++){
+	if(files[i] != "index.js"){
+		require("./"+files[i])(app,io);
+	}
+}
+}
