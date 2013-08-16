@@ -4,8 +4,6 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
 
@@ -24,7 +22,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-require("./routes");
+require("./routes")(app);
 
 http.createServer(app).listen(app.get('port'), app.get('ip'), function(){
   console.log('Express server listening on ip:' + app.get('ip') + ' port:' + app.get('port'));
