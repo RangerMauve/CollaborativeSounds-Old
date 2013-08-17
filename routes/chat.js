@@ -36,7 +36,7 @@ module.exports = function(app, io){
 							socket.broadcast.emit("message"
 						}
 					}
-				}
+				});
 			});
 		}
 	});
