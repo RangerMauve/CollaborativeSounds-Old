@@ -8,7 +8,9 @@ oscilator.type=0;
 
 var filter = context.createBiquadFilter();
 
-var gain = context.createGain();    
+var gain = context.createGainNode();    
+
+
 
 
 filter = context.createBiquadFilter();
@@ -28,8 +30,10 @@ oscilator.noteOn(0);
 $("#start").click(function() {
   console.log('STARTED');
 oscilator.connect(filter);
-filter.connect(context.destination);
+oscilator.connect(gain);
 
+filter.connect(context.destination);
+gain.connect(context.destination);
 oscilator.connect(context.destination);    
 
 	
@@ -40,7 +44,8 @@ oscilator.connect(context.destination);
 $("#stop").click(function() {
   console.log('STOPPED');
 oscilator.disconnect();
-filter.disconnect();
+filter.disconnect(); 
+gain.disconnect();
 });
 
 
@@ -84,5 +89,20 @@ $("#oscDet").change(function () {
 
    oscilator.detune.value=this.value;
 
+}); 
+
+
+
+
+
+$("#vol").change(function () {
+
+        
+        var gained = this.value;
+        gain.gain.value = gained;
+        console.log(gain.gain.value);
+
 });
+
+
 
