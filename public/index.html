@@ -48,11 +48,8 @@
 		<div id = "chatter">
 		</div>
 		<div id = "typing">
-			<input	type = "textarea"
-					name = "textarea" />
-			<input	type = "button"
-					name = "submit"
-					value = "chat" />
+			<input	id="chatinput" type="text"/>
+			<button id="chatsubmit">Send</button>
 		</div>
 	</div>
 	<div	id = "workspace"
@@ -60,9 +57,6 @@
 	</div>
 	<div	id = "spawn"
 			style = "display:none;">
-			<form	name = "spawnd"
-					action = "void"
-					method = "post">
 				Spawn
 				<br />
 				<input	type = "button"
@@ -96,36 +90,36 @@
 				<input	type = "button"
 						name = "wave"
 						value = "wave" />
-			</form>
 		</div> 
-        
-      <!--- <script type="text/javascript" src="scripts/index.js"></script> -->
-      
-      
-      <script type="text/javascript">
-      
+      <script type="text/javascript">      
 		var out = document.getElementById("chatter");
 		function append(message){
 			out.innerHTML+=message;
 		}
 	
-        var inputChat = document.getElementById('textarea').value;
-    
-    	var chatstuff;
 		Chat.connect("test","  " + "Anon " +Math.floor(Math.random()*1337),function(err,controls){
-			chatstuff = controls;
-			if(err)out('<div style="color:#F00">Error:'+err+'</div>');
-			setTimeout(function(){controls.message(" Hello, u are now connected!");},1000);
+			if(err)append('<div style="color:#F00">Error:'+err+'</div>');
+			
+			$("#chatinput").keyup(function(e){
+				if(e.which == 13)
+					controls.message($("#chatinput").val(),function(err){
+						if(err)append('<div style="color:#F00">Error:'+err+'</div>');
+						else $("#chatinput").val("");
+					});
+			});
+			
+			$("#chatsubmit").click(function(e){
+				console.log("Clicked");
+				controls.message($("#chatInput").val(),function(err){
+					if(err)append('<div style="color:#F00">Error:'+err+'</div>');
+					else $("#chatinput").val("");
+				});
+			});
+			
 			controls.onmessage= function(name,message){
 				append("<div>"+name+":"+message+"</div>");
                 
 			}; 
-            
 		});
 	</script>
-      
-      
-      </script>
-      
-      
 </body>
