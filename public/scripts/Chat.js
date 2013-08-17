@@ -6,6 +6,10 @@ Chat = (function(){
 			console.log("Chat Request to "+room+":");
 			console.log(data);
 			socket = io.connect("/chat/+"room);
+			socket.on("connect",function(){
+				
+			});
+			
 		});
 	}
 })();
