@@ -49,7 +49,7 @@ el.style.fill="#000";
 			for(var i = 0; i < els.length; i++){
 				setup(els[i]);
 			}
-			MauveDrag.init();
+			Dragging.init();
 		})(); 
         
         ]]> </script>
