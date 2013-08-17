@@ -30,14 +30,22 @@ Nodes = (function(){
 			nid = "Node"+ranString(4);
 		nodeData.id = nid;
 		nodeData.element = cont;
-		nodeData.$element = $(cont);
 		cont.id = nid;
+		nodeData.tosave = [];
 		nodeData.emit = function(name, data){
 			cont.dispatchEvent(new CustomEvent(name,{
 				detail:data,
 				bubbles:true,
 				cancelable:true
 			}));
+		}
+		nodeData.emitChange = function(attribute, value, type){
+			this.emit("attrchange",{
+					id:this.id,
+					param:attribute,
+					type:type || "input",
+					value:value
+				});
 		}
 		cont.className = "node";
 		cont.innerHTML = types.default.structure;
@@ -51,20 +59,42 @@ Nodes = (function(){
 	}
 	
 	function init(){
+		document.addEventListener("attrchange",function(evt){
+			console.log(evt.detail);
+		});
 		register("default",function(data){
+			data.tosave.push("id");
 			data.element.querySelector(".id").innerHTML = data.id;
-			data.$element.draggable();
+			$(data.element).draggable();
 		});
 		register("oscillator",function(data){
-			$(data.element.querySelector(".frequency")).change(function(){
-				var value = this.value;
-				data.element.querySelector(".curfrequency").innerHTML = ""+value;
-				data.emit("attrchange",{
-					id:data.id,
-					param:"frequency",
-					type:"range",
-					value:value
-				});
+			data.tosave.push("frequency");
+			data.tosave.push("type");
+			data.tosave.push("detune");
+			var e = data.element;
+			data.frequency = e.querySelector(".frequency").value;
+			data.type = e.querySelector(".type").value;
+			data.detune = e.querySelector(".detune").innerHTML;
+			
+			$(e.querySelector(".frequency")).change(function(){
+				data.frequency = this.value;
+				e.querySelector(".curfrequency").innerHTML = ""+this.value;
+				data.emitChange("frequency",this.value,"range");
+				data.emitChange("curfrequency",this.value,"text");
+			});
+			$(e.querySelector(".type")).change(function(){
+				data.type = this.value;
+				data.emitChange("type",this.value,"select");
+			});
+			$(e.querySelector(".decdetune")).click(function(){
+				data.detune--;
+				e.querySelector(".detune").innerHTML = data.detune;
+				data.emitChange("detune", data.detune,"text");
+			});
+			$(e.querySelector(".incdetune")).click(function(){
+				data.detune++;
+				e.querySelector(".detune").innerHTML = data.detune;
+				data.emitChange("detune", data.detune,"text");
 			});
 		});
 	}
