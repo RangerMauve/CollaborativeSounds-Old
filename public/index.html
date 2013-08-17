@@ -18,7 +18,8 @@
 					value = "just listen"
 					onclick = " $('#participate').hide();
 								$('#chat').show();
-								$('#workspace').show();" />
+								$('#workspace').show()
+								$('#spawn').show();;" />
 		</form>
 	</div>
 	<div	id = "loggin"
@@ -41,7 +42,8 @@
 					value = "go"
 					onclick = " $('#loggin').hide();
 								$('#chat').show();
-								$('#workspace').show();" />
+								$('#workspace').show();
+								$('#spawn').show();" />
 		</form>
 	</div>
 	<div	id = "chat"
@@ -49,9 +51,9 @@
 		<div id = "chatter">
 		</div>
 		<div id = "typing">
-			<form	name="catbox"
-					action="void"
-					method="post">
+			<form	name = "catbox"
+					action = "void"
+					method = "post">
 				<input	type = "text"
 						name = "text" />
 				<input	type = "button"
@@ -63,4 +65,44 @@
 	<div	id = "workspace"
 			style = "display:none;">
 	</div>
+	<div	id = "spawn"
+			style = "display:none;">
+			<form	name = "spawnd"
+					action = "void"
+					method = "post">
+				Spawn
+				<br />
+				<input	type = "button"
+						name = "shared"
+						value = "shared" />
+				<br />
+				<input	type = "button"
+						name = "oscillator"
+						value = "oscillator" />
+				<br />
+				<input	type = "button"
+						name = "gain"
+						value = "gain" />
+				<br />
+				<input	type = "button"
+						name = "delay"
+						value = "delay" />
+				<br />
+				<input	type = "button"
+						name = "panner"
+						value = "panner" />
+				<br />
+				<input	type = "button"
+						name = "convoluter"
+						value = "convoluter" />
+				<br />
+				<input	type = "button"
+						name = "passfilter"
+						value = "passfilter" />
+				<br />
+				<input	type = "button"
+						name = "wave"
+						value = "wave" />
+			</form>
+		</div>
 </body>
