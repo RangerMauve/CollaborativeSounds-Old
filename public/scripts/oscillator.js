@@ -6,6 +6,8 @@ oscilator = context.createOscillator();
 oscilator.type=0;
 
 
+var filter = context.createBiquadFilter();
+    
  
 
 $("#selectores").change(function() {
@@ -46,12 +48,31 @@ $("#oscFreq").change(function () {
 });
 
 
+$("#oscQ").change(function () {
+
+
+    var oscQ = document.getElementById('oscQ').value;
+/*
+    
+    console.log(oscilator.Q.value=this.value); 
+    * 
+    * */ 
+    
+    filter.Q.value = this.value; 
+    console.log(filter.Q.value); 
+
+});
+
+
+
+
+
+
+
 $("#oscDet").change(function () {
 
 
     var gain = document.getElementById('oscDet').value;
-
-    
 
    oscilator.detune.value=this.value;
 
