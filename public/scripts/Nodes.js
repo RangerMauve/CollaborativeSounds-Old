@@ -32,6 +32,13 @@ Nodes = (function(){
 		nodeData.element = cont;
 		nodeData.$element = $(cont);
 		cont.id = nid;
+		nodeData.emit = function(name, data){
+			cont.dispatchEvent(new CustomEvent(name,{
+				detail:data,
+				bubbles:true,
+				cancelable:true
+			}));
+		}
 		cont.className = "node";
 		cont.innerHTML = types.default.structure;
 		var contr = cont.querySelector(".content");
@@ -49,9 +56,20 @@ Nodes = (function(){
 			data.$element.draggable();
 		});
 		register("oscillator",function(data){
-			
+			$(data.element.querySelector(".frequency")).change(function(){
+				var value = this.value;
+				data.element.querySelector(".curfrequency").innerHTML = ""+value;
+				data.emit("attrchange",{
+					id:data.id,
+					param:"frequency",
+					type:"range",
+					value:value
+				});
+			});
 		});
 	}
+	
+	
 	
 	return {
 		structure:function(name){
