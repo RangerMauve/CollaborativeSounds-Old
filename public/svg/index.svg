@@ -28,10 +28,10 @@
 <g id="rise3" class="wazap draggable" transform="translate(75,75)">
 <use xlink:href="#circle"/>
 </g>
-<g id="rise4" transform="translate(25,75)">
+<g id="rise4" class="wazap draggable" transform="translate(25,75)">
 <use xlink:href="#circle"/>
 </g>
-<g id="rise5" transform="translate(50,50)">
+<g id="rise5" class="wazap draggable" transform="translate(50,50)">
 <use xlink:href="#circle"/>
 </g>
 <script xlink:href="../scripts/drag.js"></script>
