@@ -13,15 +13,13 @@
 			out.innerHTML+=message;
 		}
 		var chatstuff;
-		Chat.connect("test2","User"+Math.floor(Math.random()*1337),function(err,controls){
+		Chat.connect("test","User"+Math.floor(Math.random()*1337),function(err,controls){
 			chatstuff = controls;
 			if(err)out('<div style="color:#F00">Error:'+err+'</div>');
-			controls.onmessage(function(name,message){
+			setTimeout(function(){controls.message("Hello World!");},1000);
+			controls.onmessage= function(name,message){
 				append("<div>"+name+":"+message+"</div>");
-			});
-			controls.ondisconnect(function(){
-				append("You Disconnected!");
-			});
+			};
 		});
 	</script>
 </body>
