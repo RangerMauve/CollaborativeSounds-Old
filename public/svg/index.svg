@@ -1,4 +1,5 @@
 <svg
+<<<<<<< HEAD
 width="100%" height="100%"
 viewBox="0 0 100 100"
 xmlns="http://www.w3.org/2000/svg"
@@ -8,38 +9,56 @@ xmlns:xlink="http://www.w3.org/1999/xlink"
 <defs>
 <circle id="circle" r="10" fill="red"/>
 </defs>
+=======
+    width="100%" height="100%"
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+>
 
+    <defs>
+        <circle id="circle" r="10" fill="red"/>
+    </defs>
 
-<defs>
-<rect id="rectangle" width="40" height="20" />
-</defs>
+    <defs>
+        <rect id="rectangle" width="40" height="20" />
+    </defs>
+>>>>>>> dc64c1fc9e9bacc36324c0012eb68d74e2f1c974
 
+    <g id="rect1" transform="translate(90,10)">
+        <use xlink:href="#rectangle"/>
+    </g>
 
+    <g id="rect2" transform="translate(90,40)">
+        <use xlink:href="#rectangle"/> 
+    </g>
+
+    <g id="rise1"  transform="translate(25,25)">
+        <use xlink:href="#circle"/>
+    </g>
+
+<<<<<<< HEAD
 
 
 <g id="rect1" transform="translate(90,10)">
 <use xlink:href="#rectangle"/> </g>
+=======
+    <g id="rise2"  transform="translate(75,25)">
+        <use xlink:href="#circle"/>
+    </g>
+>>>>>>> dc64c1fc9e9bacc36324c0012eb68d74e2f1c974
 
+    <g id="rise3"  transform="translate(75,75)">
+        <use xlink:href="#circle"/>
+    </g>
 
-<g id="rect2" transform="translate(90,40)">
-<use xlink:href="#rectangle"/> </g>
+    <g id="rise4"  transform="translate(25,75)">
+        <use xlink:href="#circle"/>
+    </g>
 
-
-<g id="rise1"  transform="translate(25,25)">
-<use xlink:href="#circle"/>
-</g>
-<g id="rise2"  transform="translate(75,25)">
-<use xlink:href="#circle"/>
-</g>
-<g id="rise3"  transform="translate(75,75)">
-<use xlink:href="#circle"/>
-</g>
-<g id="rise4"  transform="translate(25,75)">
-<use xlink:href="#circle"/>
-</g>
-<g id="rise5"  transform="translate(50,50)">
-<use xlink:href="#circle"/>
-</g>
+    <g id="rise5"  transform="translate(50,50)">
+        <use xlink:href="#circle"/>
+    </g>
 
 <script xlink:href="../scripts/drag.js"></script>
 </svg>
