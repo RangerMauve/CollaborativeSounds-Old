@@ -36,15 +36,15 @@ Nodes = (function(){
 		var contr = cont.querySelector(".content");
 		contr.innerHTML = types[name].structure;
 		contr.className+=" "+name;
-		types.default.init(cont);
-		types[name].init(cont);
+		types.default.init(nodeData);
+		types[name].init(nodeData);
 		list[nid]=nodeData;
 		return cont;
 	}
 	
 	function init(){
 		register("default",function(data){
-			
+			data.element.querySelector(".id").innerHTML = data.id;
 		});
 		register("oscillator",function(data){
 			
