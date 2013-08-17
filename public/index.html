@@ -109,7 +109,13 @@
 						value = "wave" />
 			</form>
 		</div> 
-        <div id="out"><p>Output Goes Here</p></div> 
+        
+        <div id="out"><p>Chatt</p></div> 
+        
+        <form name="input" action="">
+		<input type="textarea" id="textbox1" />
+        <input type="button" id="enterIt" value="press"/>
+        </form>
         
       <!--- <script type="text/javascript" src="scripts/index.js"></script> -->
       
@@ -120,14 +126,19 @@
 		function append(message){
 			out.innerHTML+=message;
 		}
-		var chatstuff;
-		Chat.connect("test","  " + "Anon" +Math.floor(Math.random()*1337),function(err,controls){
+	
+        var inputChat = document.getElementById('textbox1').value;
+    
+    	var chatstuff;
+		Chat.connect("test","  " + "Anon " +Math.floor(Math.random()*1337),function(err,controls){
 			chatstuff = controls;
 			if(err)out('<div style="color:#F00">Error:'+err+'</div>');
-			setTimeout(function(){controls.message("Hello, u are now connected!");},1000);
+			setTimeout(function(){controls.message(" Hello, u are now connected!");},1000);
 			controls.onmessage= function(name,message){
 				append("<div>"+name+":"+message+"</div>");
-			};
+                
+			}; 
+            
 		});
 	</script>
       
