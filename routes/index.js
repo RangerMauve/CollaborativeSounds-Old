@@ -5,7 +5,7 @@ module.exports = function(app,io){
 	var files = fs.readdirSync(__dirname);
 	for(var i = 0; i < files.length; i++){
 		if(files[i] != "index.js"){
-			require("./"+files[i])(app,io);
+			require(require('path').join(__dirname, files[i]))(app,io);
 		}
 	}
 }
