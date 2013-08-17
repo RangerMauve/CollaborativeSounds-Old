@@ -1,7 +1,14 @@
-<defs>
-<circle id="circles" r="10"/>
-	
-    <g id="circleOne"  transform="translate(25,25)">
+<svg
+    width="100%" height="100%"
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+>
 
-</g>
-</defs>
+    <defs>
+        <circle id="circles" r="10"/>
+        <g id="circleOne"  transform="translate(25,25)">
+
+        </g>
+    </defs>
+</svg>
