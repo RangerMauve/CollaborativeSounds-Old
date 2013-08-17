@@ -1,0 +1,24 @@
+<svg	xmlns:svg="http://www.w3.org/20000/svg"
+		xmlns="http://www.w3.org/2000/svg"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
+		version="1.0">
+	<g id = "drawnItems">
+		<rect	id = "box"
+				height = "100px"
+				width =	"200px"
+				style = "	fill:white;
+							stroke:black;
+							stroke-width:5;"/>
+		<foreignObject	height = "100px"
+						width = "200px">
+			<body xmlns="http://www.w3.org/1999/xhtml">
+				<input	type = "range"
+						name = "tone"
+						min = "12"
+						max = "20000"
+						value = "12"
+						step = "1" />
+			</body>
+		</foreignObject>
+	</g>
+</svg>
