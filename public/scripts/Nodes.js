@@ -28,6 +28,7 @@ Nodes = (function(){
 		while(!document.getElementById(nid))
 			nid = "Node"+ranString(4);
 		cont.id = nid;
+		cont.className = "node "+name;
 		cont.innerHTML = types.default.structure;
 		cont.querySelector(".content").innerHTML = types[name].structure;
 		types.default.init(cont);
