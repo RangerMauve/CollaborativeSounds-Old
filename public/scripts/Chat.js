@@ -1,0 +1,1 @@
+// Make sure you have <script xlink:href="/socket.io/socket.io.js"></script> or the HTML version
