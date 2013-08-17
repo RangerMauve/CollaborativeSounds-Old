@@ -42,7 +42,7 @@ Nodes = (function(){
 		nodeData.emitChange = function(attribute, value, type){
 			this.emit("attrchange",{
 					id:this.id,
-					param:attribute,
+					attribute:attribute,
 					type:type || "input",
 					value:value
 				});
@@ -59,9 +59,7 @@ Nodes = (function(){
 	}
 	
 	function init(){
-		document.addEventListener("attrchange",function(evt){
-			console.log(evt.detail);
-		});
+		document.addEventListener("attrchange",function(evt){console.log(evt.detail);});
 		register("default",function(data){
 			data.tosave.push("id");
 			data.element.querySelector(".id").innerHTML = data.id;
