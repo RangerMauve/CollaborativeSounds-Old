@@ -1,14 +1,58 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		#nodedefs {
-			display:none;
-		}
+		<link rel="stylesheet" href="/stylesheets/nodes.css">
+		<script src="/scripts/jquery.js"></script>
 	</head>
 	<body>
 		<span id="nodedefs">
-			<div class="node"><div class= "id"></div><div class="controls">Output: <select name = "output"><option value = "null">none</option></select><button>&#9654;</button><button>X</button></div><div class= "content"></div></div>
+	<!-- Default Node -->
+	<div id="default" class="node">
+		<div class= "id">
+			Id Goes Here
+		</div>
+		<div class="controls">
+				Output:
+				<select name = "output">
+						<option value = "null">none</option>
+				</select>
+				<button>&#9654;</button>
+				<button>X</button>
+		</div>
+		<div class= "content">
+		</div>
+	</div>
+	<!-- Default End -->
+	<!-- Oscilaltor -->
+	<div id="oscillator" class="oscillator">
+		<div>
+			Frequency:
+			<span class="curfequency">200</span>
+			<input class="frequency" type="range" min="40" max="1000" value="200"/>
+		</div>
+		<div>
+			Type:
+			<select class="type">
+				<option value="sine">Sine</option>
+				<option value="square">Square</option>
+				<option value="sawtooth">Sawtooth</option>
+				<option value="triangle">Triangle</option>
+			</select>
+		</div>
+		<div>Detune:</div>
+		<div class="control">
+			<div class="decdetune">-</div>
+			<div class="detune">0</div>
+			<div class="incdetune">+</div>
+		</div>
+	</div>
+	<!-- End Oscilaltor -->
 		</span>
 		<script src="/scripts/nodescripts.js"></script>
+		<script>
+			Nodes.register("default",function(data){
+				console.log(data.element);
+			});
+		</script>
 	</body>
 </html>

@@ -23,14 +23,19 @@ Nodes = (function(){
 	}
 	
 	function create(name){
+		var nodeData = {};
 		var cont = document.createElement("div");
 		var nid = "Node"+ranString(4);
 		while(!document.getElementById(nid))
 			nid = "Node"+ranString(4);
+		nodeData.id = nid;
+		nodeData.element = cont;
 		cont.id = nid;
 		cont.className = "node "+name;
 		cont.innerHTML = types.default.structure;
-		cont.querySelector(".content").innerHTML = types[name].structure;
+		var contr = cont.querySelector(".content");
+		contr.innerHTML = types[name].structure;
+		contr.className+=" name";
 		types.default.init(cont);
 		types[name].init(cont);
 	}

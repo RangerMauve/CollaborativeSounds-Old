@@ -1,10 +1,49 @@
+#nodedefs {
+	display:none;
+}
+
 .node {
 	border-radius:10px;
+	padding:10px;
 	min-height:40px;
 	border: 2px solid black;
 	width:200px;
 	text-align:center;
+	font-size:12px;
 }
-.node .controls{
-	font-size:10px;
+
+/*Oscillator node styles*/
+.node .oscillator {
+	text-align:left;
 }
+.node .oscillator > div {
+	padding:4px;
+}
+.node .oscillator .control,
+.node .oscillator .frequency,
+.node .oscillator .type {
+	display:block;
+	margin: 0 auto;
+	width:100px;
+} 
+.node .oscillator .frequency {
+	width:100px;
+	display:block;
+}
+.node .oscillator .control > * {
+	text-align:center;
+	margin-left:4px;
+	margin-right:4px;
+	border: 1px solid #DDD;
+	display:inline-block;
+	width:20px;
+}
+.node .oscillator .decdetune:hover, 
+.node .oscillator .incdetune:hover{
+	background:#EEE;
+}
+.node .oscillator .decdetune:active, 
+.node .oscillator .incdetune:active{
+	background:#DDF;
+}
+/*Oscillator style end*/
