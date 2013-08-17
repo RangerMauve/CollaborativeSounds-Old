@@ -1,1 +1,7 @@
-<svg></svg>
+<defs>
+<circle id="circles" r="10"/>
+	
+    <g id="circleOne"  transform="translate(25,25)">
+
+</g>
+</defs>
