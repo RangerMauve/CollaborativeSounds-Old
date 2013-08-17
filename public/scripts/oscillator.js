@@ -5,7 +5,7 @@ oscilator.type=0;
 
 var filter = context.createBiquadFilter();
 
-var gain = context.createGain();
+var gain = context.createGainNode(); 
 
 filter = context.createBiquadFilter();
 
@@ -24,7 +24,9 @@ oscilator.noteOn(0);
 $("#start").click(function() {
     console.log('STARTED');
     oscilator.connect(filter);
+    oscilator.connect(gain);
     filter.connect(context.destination);
+    gain.connect(context.destination);
     oscilator.connect(context.destination);
 
 });
@@ -34,8 +36,8 @@ $("#stop").click(function() {
     console.log('STOPPED');
     oscilator.disconnect();
     filter.disconnect();
+    gain.disconnect();
 });
-
 
 
 $("#oscFreq").change(function () {
@@ -49,15 +51,9 @@ $("#oscQ").change(function () {
     var qued = document.getElementById('oscQ').value;
     filter.Q.value = this.value;
 
-    console.log(filter.Q.value);
   //console.log(oscilator.Q.value=this.value); 
   
 });
-
-
-
-
-
 
 
 $("#oscDet").change(function () {
@@ -66,3 +62,10 @@ $("#oscDet").change(function () {
 
 });
 
+
+$("#vol").change(function () {
+    var gained = this.value;
+    gain.gain.value = gained;
+    console.log(gain.gain.value);
+
+ });
