@@ -7,14 +7,9 @@
 <body>
 
 <div id="osc">
-    <p>SINE WAVE</p>
-Freq:<input id="oscFreq" type="range" min="50" max="2500" step="1" value="0" />
-
-Detune:<input id="oscDet" type="range" min="50" max="2500" step="1" value="90" /> 
-Quality:<input id="oscQ" type="range" min="0" max="50" step="1" value="10" /> 
-Gain:<input id="vol" type="range" min="10" max="100" value="100" step="1" />
-</br><input id="stop" type="button" value="stop" />
+    <p>Oscillator</p>
 <input id="start" type="button" value="start" />
+<input id="stop" type="button" value="stop" />
 <select id="selectores">
     
     <option value="sine">sine</option> 
@@ -22,6 +17,12 @@ Gain:<input id="vol" type="range" min="10" max="100" value="100" step="1" />
     <option id="sawtooth" value="sawtooth">sawtooth</option>
     <option value="triangle" >triangle</option>
 </select>
+
+
+Freq:<input id="oscFreq" type="range" min="50" max="2500" step="1" value="0" />
+Detune:<input id="oscDet" type="range" min="50" max="2500" step="1" value="90" /> 
+Quality:<input id="oscQ" type="range" min="0" max="50" step="1" value="10" /> 
+Gain:<input id="vol" type="range" min="10" max="100" value="100" step="1" />
 </div>
 
 
