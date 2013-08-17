@@ -41,7 +41,7 @@ $("#oscDet").change(function () {
 
     var gain = document.getElementById('oscDet').value;
 
-    ;
+    
 
    oscilator.detune.value=this.value;
 
