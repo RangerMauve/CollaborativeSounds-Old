@@ -1,9 +1,9 @@
-var express = require('express')
-  , http = require('http')
-  , path = require('path')
-  , app = express()
-  , server = http.createServer(app)
-  , io = require('socket.io').listen(server);
+var express = require('express'),
+    http = require('http'),
+    path = require('path'),
+    app = express(),
+    server = http.createServer(app),
+    io = require('socket.io').listen(server);
 
 
 // all environments
@@ -23,18 +23,18 @@ io.configure(function(){
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 }
 
 require("./routes")(app,io);
 
 //, app.get('ip'), 
 server.listen(app.get('port'),function(){
-  console.log('Express server listening on ip:' + app.get('ip') + ' port:' + app.get('port'));
+    console.log('Express server listening on ip:' + app.get('ip') + ' port:' + app.get('port'));
 });
 
 
 module.exports = {
 	app:app,
 	io:io
-}
+};
