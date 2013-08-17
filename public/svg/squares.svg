@@ -4,8 +4,8 @@
 		version="1.0">
 	<defs>
 		<rect	id = "rect"
-				x = "0"
-				y = "0"/>
+				height = "100"
+				width = "100"/>
 	</defs>
 	<g id = "drawnItems">
 		<g id = "1" transform = "translate(0,0)">
