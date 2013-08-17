@@ -21,4 +21,15 @@
 }
 #spawn{
 	float:right;
+} 
+
+#out {
+
+border: solid 2px;
+width:300px;
+height:auto;
+}
+#out p {
+text-align:center;
+
 }

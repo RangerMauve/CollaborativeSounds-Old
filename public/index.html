@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <head>
 	<title>Collaborative Sounds</title>
-	<script type="text/javascript" src="scripts/jquery.js"></script>
-	<link rel="stylesheet" type="text/css" href="stylesheets/index.css">
+	<script type="text/javascript" src="scripts/jquery.js"></script> 
+    
+	<link rel="stylesheet" type="text/css" href="stylesheets/index.css"> 
+    <script src="/scripts/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/scripts/Chat.js"></script>
 </head>
 <body>
 	<div	id = "participate">
@@ -104,5 +108,31 @@
 						name = "wave"
 						value = "wave" />
 			</form>
-		</div>
+		</div> 
+        <div id="out"><p>Output Goes Here</p></div> 
+        
+      <!--- <script type="text/javascript" src="scripts/index.js"></script> -->
+      
+      
+      <script type="text/javascript">
+      
+		var out = document.getElementById("out");
+		function append(message){
+			out.innerHTML+=message;
+		}
+		var chatstuff;
+		Chat.connect("test","  " + "Anon" +Math.floor(Math.random()*1337),function(err,controls){
+			chatstuff = controls;
+			if(err)out('<div style="color:#F00">Error:'+err+'</div>');
+			setTimeout(function(){controls.message("Hello, u are now connected!");},1000);
+			controls.onmessage= function(name,message){
+				append("<div>"+name+":"+message+"</div>");
+			};
+		});
+	</script>
+      
+      
+      </script>
+      
+      
 </body>
