@@ -30,6 +30,7 @@ Nodes = (function(){
 			nid = "Node"+ranString(4);
 		nodeData.id = nid;
 		nodeData.element = cont;
+		nodeData.$element = $(cont);
 		cont.id = nid;
 		cont.className = "node";
 		cont.innerHTML = types.default.structure;
@@ -45,6 +46,7 @@ Nodes = (function(){
 	function init(){
 		register("default",function(data){
 			data.element.querySelector(".id").innerHTML = data.id;
+			data.$element.draggable();
 		});
 		register("oscillator",function(data){
 			
