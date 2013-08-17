@@ -1,13 +1,8 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express')
   , http = require('http')
   , path = require('path');
 
-GLOBAL.app = express();
+var app = express();
 
 // all environments
 app.set('ip', process.env.OPENSHIFT_NODEJS_IP || "localhost");
