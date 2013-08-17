@@ -107,8 +107,6 @@ Nodes = (function(){
 		});
 	}
 	
-	
-	
 	return {
 		structure:function(name){
 			return types[name];

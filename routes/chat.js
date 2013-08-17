@@ -36,13 +36,18 @@ module.exports = function(app, io){
 						if(callback instanceof Function)callback("AlreadyJoined");
 					} else if(name.toUpperCase() in users){
 						if(callback instanceof Function)callback("NameRegistered");
+					} else if(!name){
+						if(callback instanceof Function)callback("NoNameGiven");
 					} else {
 						user = {name:name};
 						users[name.toUpperCase()]= user;
 						msg("joined");
 						socket.on("message",function(message, callback){
 							msg("says:"+message);
-							if(wait < Date.now() - lastChat){
+							if(!message){
+								if(callback instanceof Function)callback("NoMessage");
+							} else if(wait < Date.now() - lastChat){
+								lastChat = Date.now();
 								chatio.emit("message", name, filterMsg(message));
 								if(callback instanceof Function)callback(null);
 							} else {
