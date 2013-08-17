@@ -33,7 +33,7 @@ module.exports = function(app, io){
 						if(name){
 						
 						} else {
-							socket.broadcast.emit("message"
+							socket.broadcast.emit("message");
 						}
 					}
 				});
