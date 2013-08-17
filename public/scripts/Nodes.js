@@ -65,7 +65,15 @@ Nodes = (function(){
 		register("default",function(data){
 			data.tosave.push("id");
 			data.element.querySelector(".id").innerHTML = data.id;
-			$(data.element).draggable();
+			$(data.element).draggable({
+				drag:function(){
+					data.emitChange(
+						"position",
+						{top:this.style.top,left:this.style.left},
+						"point"
+					);
+				}
+			});
 		});
 		register("oscillator",function(data){
 			data.tosave.push("frequency");
