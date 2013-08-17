@@ -6,6 +6,16 @@ oscilator = context.createOscillator();
 oscilator.type=0;
 
 
+ 
+
+$("#selectores").change(function() {
+                var selectores = document.getElementById("selectores"); 
+                var oscillator = selectores.selectedIndex;
+                oscilator.type=oscillator;
+               console.log(oscillator);
+                
+    
+    });
 
 oscilator.noteOn(0);
 
