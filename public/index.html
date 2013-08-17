@@ -1,65 +1,64 @@
-<html>
-	<head>
-		<title>Collaborative Sounds</title>
-	</head>
-	<body>
-		<div id = "participate">
-			<form = "participation"	action = "void"
-									method = "post">
+<!DOCTYPE html>
+<head>
+	<title>Collaborative Sounds</title>
+</head>
+<body>
+	<div id = "participate">
+		<form = "participation"	action = "void"
+								method = "post">
+			<input	type = "button"
+					name = "participate"
+					value = "paticipate"
+					onclick = "	$('participate').hide();
+								$('loggin').show();"/>
+			<input	type = "button"
+					name = "listen"
+					value = "just listen"
+					onclick = " $('participate').hide();
+								$('chat').show();
+								$('workspace').show();" />
+		</form>
+	</div>
+	<div	id = "loggin"
+			style = "display:none;">
+		<form	name = "login"
+				action = "void"
+				method = "post">
+			Username:
+			<input	type = "text"
+					name = "user" />
+			<br/>
+			Room*:
+			<input	type = "text"
+					name = "room" />
+			<br/>
+			*optional
+			<br/>
+			<input	type = "button"
+					name = "blogin"
+					value = "go"
+					onclick = " $('loggin').hide();
+								$('chat').show();
+								$('workspace').show();" />
+		</form>
+	</div>
+	<div	id = "chat"
+			style = "display:none;">
+		<div id = "chatter">
+		</div>
+		<div id = "typing">
+			<form	name="catbox"
+					action="void"
+					method="post">
+				<input	type = "text"
+						name = "text" />
 				<input	type = "button"
-						name = "participate"
-						value = "paticipate"
-						onclick = "	$('participate').hide();
-									$('loggin').show();"/>
-				<input	type = "button"
-						name = "listen"
-						value = "just listen"
-						onclick = " $('participate').hide();
-									$('chat').show();
-									$('workspace').show();" />
+						name = "submit"
+						value = "chat" />
 			</form>
 		</div>
-		<div	id = "loggin"
-				style = "display:none;">
-			<form	name = "login"
-					action = "void"
-					method = "post">
-				Username:
-				<input	type = "text"
-						name = "user" />
-				<br/>
-				Room*:
-				<input	type = "text"
-						name = "room" />
-				<br/>
-				*optional
-				<br/>
-				<input	type = "button"
-						name = "blogin"
-						value = "go"
-						onclick = " $('loggin').hide();
-									$('chat').show();
-									$('workspace').show();" />
-			</form>
-		</div>
-		<div	id = "chat"
-				style = "display:none;">
-			<div id = "chatter">
-			</div>
-			<div id = "typing">
-				<form	name="catbox"
-						action="void"
-						method="post">
-					<input	type = "text"
-							name = "text" />
-					<input	type = "button"
-							name = "submit"
-							value = "chat" />
-				</form>
-			</div>
-		</div>
-		<div	id = "workspace"
-				style = "display:none;">
-		</div>
-	</body>
-</html>
+	</div>
+	<div	id = "workspace"
+			style = "display:none;">
+	</div>
+</body>
