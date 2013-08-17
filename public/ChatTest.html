@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/scripts/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/scripts/Chat.js"></script>
+</head>
+<body>
+	<div id="out"><p>Output Goes Here</p></div>
+	<script>
+		var out = document.getElementById("out");
+		function append(message){
+			out.innerHTML+=message;
+		}
+		var chatstuff;
+		Chat.connect("test2","User"+Math.floor(Math.random()*1337),function(err,controls){
+			chatstuff = controls;
+			if(err)out('<div style="color:#F00">Error:'+err+'</div>');
+			controls.onmessage(function(name,message){
+				append("<div>"+name+":"+message+"</div>");
+			});
+			controls.ondisconnect(function(){
+				append("You Disconnected!");
+			});
+		});
+	</script>
+</body>
+</html>

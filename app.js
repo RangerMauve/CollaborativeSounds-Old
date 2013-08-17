@@ -13,6 +13,13 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+io.configure(function(){
+	io.set('log level', 2);
+	io.set("transports",["websocket"]);
+	//io.enable("browser client minification");
+	//io.enable("browser client gzip");
+});
+
 
 // development only
 if ('development' == app.get('env')) {
@@ -24,3 +31,9 @@ require("./routes")(app,io);
 server.listen(app.get('port'), app.get('ip'), function(){
   console.log('Express server listening on ip:' + app.get('ip') + ' port:' + app.get('port'));
 });
+
+
+module.exports = {
+	app:app,
+	io:io
+}

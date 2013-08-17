@@ -1,48 +1,64 @@
 // Make sure you have socket.io and JQuery
 Chat = (function(){
-	function connect(room,name,fail){
+	function connect(room,name,callback){
 		var socket = null;
 		var domsg = null;
 		var dodc = null;
+		var dorename = null;
+		
 		$.getJSON("/chat/request/"+room,function(data){
 			console.log("Chat Request to "+room+":");
 			console.log(data);
-			socket = io.connect("/chat/+"room);
+			socket = io.connect("/chat/"+room);
 			
 			socket.on("connect",function(){
-				rename(name,fail);
+				callback( 
+					null,
+					{
+						socket:socket,
+						set onmessage(callback){
+							domsg = callback;
+						},
+						set ondisconnect(callback){
+							dodc = callback;
+						},
+						set onrename(callback){
+							dorename = callback;
+						},
+						message:function(message,callback){
+							socket.emit("message",message,callback);
+						},
+						rename: function(newname,callback){
+							socket.emit(newname, callback);
+						}
+					}
+				);
+				socket.on("message",function(name,message){
+					if(domsg instanceof Function){
+						domsg(name, message);
+					} else {
+						console.log(room+":"+name+":"+message);
+					}
+				});
+				socket.on("renamed",function(oldname, newname){
+					if(dorename instanceof Function){
+						dorename(oldname, newname);
+					} else {
+						console.log(room+": "+name+" is now "+newname);
+					}
+				});
+				socket.on("disconnect",function(){
+					if(dodc instanceof Function){
+						dodc();
+					} else {
+						console.log(room+": disconnected");
+					}
+				});
 			});
-			
-			socket.on("disconnect",function(){
-				if(dodc)dodc();
-			});
-			
-			socket.on("message",function(){
-				if(domsg)domsg.apply(null, arguments);
-			})
-			
-			function rename(newname,fail){
-				socket.emit("join",newname,callback);
-			}
-			
-			function sendmsg(message,fail){
-				socket.emit("message",message,fail);
-			}
-			
-			function dc(){
-				socket.disconnect();
-			}
-			
-			return {
-				onmessage:function(callback){domsg = callback;},
-				ondisconnect:function(callback){dodc = callback;},
-				rename:rename,
-				sendmessage:sendmsg
-				disconnect:dc
-			}
 		});
-		return {
-			connect:connect
-		}
+	}
+	
+	return {
+		connect:connect
 	}
 })();
