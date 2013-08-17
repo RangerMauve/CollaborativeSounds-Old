@@ -10,60 +10,49 @@
 </head>
 <body>
 	<div	id = "participate">
-		<form id = "participation"	action = "void"
-								method = "post">
-			<input	type = "button"
-					name = "participate"
-					value = "paticipate"
-					onclick = "	$('#participate').hide();
-								$('#loggin').show();"/>
-			<input	type = "button"
-					name = "listen"
-					value = "just listen"
-					onclick = " $('#participate').hide();
-								$('#chat').show();
-								$('#workspace').show()
-								$('#spawn').show();;" />
-		</form>
+		<input	type = "button"
+				name = "participate"
+				value = "paticipate"
+				onclick = "	$('#participate').hide();
+							$('#loggin').show();"/>
+		<input	type = "button"
+				name = "listen"
+				value = "just listen"
+				onclick = " $('#participate').hide();
+							$('#chat').show();
+							$('#workspace').show()
+							$('#spawn').show();;" />
 	</div>
 	<div	id = "loggin"
 			style = "display:none;">
-		<form	name = "login"
-				action = "void"
-				method = "post">
-			Username:
-			<input	type = "text"
-					name = "user" />
-			<br/>
-			Room*:
-			<input	type = "text"
-					name = "room" />
-			<br/>
-			*optional
-			<br/>
-			<input	type = "button"
-					name = "blogin"
-					value = "go"
-					onclick = " $('#loggin').hide();
-								$('#chat').show();
-								$('#workspace').show();
-								$('#spawn').show();" />
-		</form>
+		Username:
+		<input	type = "text"
+				name = "user" />
+		<br/>
+		Room*:
+		<input	type = "text"
+				name = "room" />
+		<br/>
+		*optional
+		<br/>
+		<input	type = "button"
+				name = "blogin"
+				value = "go"
+				onclick = " $('#loggin').hide();
+							$('#chat').show();
+							$('#workspace').show();
+							$('#spawn').show();" />
 	</div>
 	<div	id = "chat"
 			style = "display:none;">
 		<div id = "chatter">
 		</div>
 		<div id = "typing">
-			<form	name = "catbox"
-					action = "void"
-					method = "post">
-				<input	type = "text"
-						name = "text" />
-				<input	type = "button"
-						name = "submit"
-						value = "chat" />
-			</form>
+			<input	type = "textarea"
+					name = "textarea" />
+			<input	type = "button"
+					name = "submit"
+					value = "chat" />
 		</div>
 	</div>
 	<div	id = "workspace"
@@ -110,24 +99,17 @@
 			</form>
 		</div> 
         
-        <div id="out"><p>Chatt</p></div> 
-        
-        <form name="input" action="">
-		<input type="textarea" id="textbox1" />
-        <input type="button" id="enterIt" value="press"/>
-        </form>
-        
       <!--- <script type="text/javascript" src="scripts/index.js"></script> -->
       
       
       <script type="text/javascript">
       
-		var out = document.getElementById("out");
+		var out = document.getElementById("chatter");
 		function append(message){
 			out.innerHTML+=message;
 		}
 	
-        var inputChat = document.getElementById('textbox1').value;
+        var inputChat = document.getElementById('textarea').value;
     
     	var chatstuff;
 		Chat.connect("test","  " + "Anon " +Math.floor(Math.random()*1337),function(err,controls){

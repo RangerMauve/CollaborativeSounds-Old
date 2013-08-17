@@ -34,7 +34,7 @@ if(app.get("ip")){
 	});
 } else {
 	server.listen(app.get('port'),app.get('ip'),function(){
-		 console.log('Express server listening on  port:' + app.get('port'));
+		console.log('Express server listening on  port:' + app.get('port'));
 	});
 }
 
