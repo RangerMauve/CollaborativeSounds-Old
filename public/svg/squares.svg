@@ -1,0 +1,19 @@
+<svg	xmlns:svg="http://www.w3.org/20000/svg"
+		xmlns="http://www.w3.org/2000/svg"
+		version="1.0">
+	<defs>
+		<rect	id = "rect"
+				x = "0"
+				y = "0"/>
+	</defs>
+	<g id = "drawnItems">
+		<g id = "1" transform = "translate(0,0)">
+			<use xlink:href = "#rect"></use>
+		</g>
+		<g id = "2" transform = "translate(200,200)">
+			<use xlink:href = "#rect"></use>
+		</g>
+		<g id = "paths">
+		</g>	
+	</g>
+</svg>
