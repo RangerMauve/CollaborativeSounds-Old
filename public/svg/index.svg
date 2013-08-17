@@ -34,24 +34,13 @@
 <g id="rise5" transform="translate(50,50)">
 <use xlink:href="#circle"/>
 </g>
-
+<script xlink:href="../scripts/drag.js"></script>
 <script><![CDATA[
 
-	function toggle(ispressed,el){
-if(ispressed){
-el.style.fill="#F00";
-} else {
-el.style.fill="#000";
 
-
-(function(){
-			var els = document.getElementsByClassName("wazap");
-			for(var i = 0; i < els.length; i++){
-				setup(els[i]);
-			}
 			Dragging.init();
-		})(); 
+		 
         
-        ]]> </script>
-<script xlink:href="../scripts/drag.js"></script>
+        ]]></script>
+
 </svg>
