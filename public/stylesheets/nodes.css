@@ -10,6 +10,7 @@
 	width:200px;
 	text-align:center;
 	font-size:12px;
+	display:inline-block;
 }
 
 /*Oscillator node styles*/

@@ -26,18 +26,29 @@ Nodes = (function(){
 		var nodeData = {};
 		var cont = document.createElement("div");
 		var nid = "Node"+ranString(4);
-		while(!document.getElementById(nid))
+		while(document.getElementById(nid))
 			nid = "Node"+ranString(4);
 		nodeData.id = nid;
 		nodeData.element = cont;
 		cont.id = nid;
-		cont.className = "node "+name;
+		cont.className = "node";
 		cont.innerHTML = types.default.structure;
 		var contr = cont.querySelector(".content");
 		contr.innerHTML = types[name].structure;
-		contr.className+=" name";
+		contr.className+=" "+name;
 		types.default.init(cont);
 		types[name].init(cont);
+		list[nid]=nodeData;
+		return cont;
+	}
+	
+	function init(){
+		register("default",function(data){
+			
+		});
+		register("oscillator",function(data){
+			
+		});
 	}
 	
 	return {
@@ -45,6 +56,10 @@ Nodes = (function(){
 			return types[name];
 		},
 		register:register,
-		create:create
+		create:create,
+		init:init,
+		get list(){
+			return list;
+		}
 	}
 })();

@@ -3,6 +3,7 @@
 	<head>
 		<link rel="stylesheet" href="/stylesheets/nodes.css">
 		<script src="/scripts/jquery.js"></script>
+		<script src="/scripts/Nodes.js"></script>
 	</head>
 	<body>
 		<span id="nodedefs">
@@ -48,11 +49,9 @@
 	</div>
 	<!-- End Oscilaltor -->
 		</span>
-		<script src="/scripts/nodescripts.js"></script>
 		<script>
-			Nodes.register("default",function(data){
-				console.log(data.element);
-			});
+			Nodes.init();
+			document.body.appendChild(Nodes.create("oscillator"));
 		</script>
 	</body>
 </html>
