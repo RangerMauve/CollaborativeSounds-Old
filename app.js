@@ -28,8 +28,8 @@ if ('development' == app.get('env')) {
 
 require("./routes")(app,io);
 
-//, app.get('ip'), 
-server.listen(app.get('port'),function(){
+//,  
+server.listen(app.get('port'),app.get('ip'),function(){
   console.log('Express server listening on ip:' + app.get('ip') + ' port:' + app.get('port'));
 });
 
