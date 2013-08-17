@@ -7,8 +7,11 @@ oscilator.type=0;
 
 
 var filter = context.createBiquadFilter();
-    
- 
+
+var gain = context.createGain();    
+
+
+filter = context.createBiquadFilter();
 
 $("#selectores").change(function() {
                 var selectores = document.getElementById("selectores"); 
@@ -24,7 +27,12 @@ oscilator.noteOn(0);
 
 $("#start").click(function() {
   console.log('STARTED');
-oscilator.connect(context.destination);
+oscilator.connect(filter);
+filter.connect(context.destination);
+
+oscilator.connect(context.destination);    
+
+	
 
 });
 
@@ -32,15 +40,13 @@ oscilator.connect(context.destination);
 $("#stop").click(function() {
   console.log('STOPPED');
 oscilator.disconnect();
-
+filter.disconnect();
 });
 
 
 
 $("#oscFreq").change(function () {
-
-
-    var freq = document.getElementById('oscFreq').value;
+var freq = document.getElementById('oscFreq').value;
 
     
     oscilator.frequency.value=this.value;
@@ -50,17 +56,20 @@ $("#oscFreq").change(function () {
 
 $("#oscQ").change(function () {
 
+    var qued = document.getElementById('oscQ').value;
+    
 
-    var oscQ = document.getElementById('oscQ').value;
+    filter.Q.value = this.value; 
+    console.log(filter.Q.value); 
+
 /*
     
     console.log(oscilator.Q.value=this.value); 
     * 
     * */ 
     
-    filter.Q.value = this.value; 
-    console.log(filter.Q.value); 
-
+        
+    
 });
 
 
@@ -71,8 +80,7 @@ $("#oscQ").change(function () {
 
 $("#oscDet").change(function () {
 
-
-    var gain = document.getElementById('oscDet').value;
+    var detune = document.getElementById('oscDet').value;
 
    oscilator.detune.value=this.value;
 
