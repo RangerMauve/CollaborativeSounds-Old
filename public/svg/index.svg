@@ -11,21 +11,21 @@
 </defs>
 
 
-<g id="rect1" transform="translate(90,10)">
+<g id="rect1" class="wazap draggable" transform="translate(90,10)">
 <use xlink:href="#rectangle"/> </g>
 
 
-<g id="rect2" transform="translate(90,40)">
+<g id="rect2" class="wazap draggable" transform="translate(90,40)">
 <use xlink:href="#rectangle"/> </g>
 
 
-<g id="rise1" transform="translate(25,25)">
+<g id="rise1" class="wazap draggable" transform="translate(25,25)">
 <use xlink:href="#circle"/>
 </g>
-<g id="rise2" transform="translate(75,25)">
+<g id="rise2" class="wazap draggable" transform="translate(75,25)">
 <use xlink:href="#circle"/>
 </g>
-<g id="rise3" transform="translate(75,75)">
+<g id="rise3" class="wazap draggable" transform="translate(75,75)">
 <use xlink:href="#circle"/>
 </g>
 <g id="rise4" transform="translate(25,75)">
@@ -35,5 +35,23 @@
 <use xlink:href="#circle"/>
 </g>
 
+<script><![CDATA[
 
+	function toggle(ispressed,el){
+if(ispressed){
+el.style.fill="#F00";
+} else {
+el.style.fill="#000";
+
+
+(function(){
+			var els = document.getElementsByClassName("wazap");
+			for(var i = 0; i < els.length; i++){
+				setup(els[i]);
+			}
+			MauveDrag.init();
+		})(); 
+        
+        ]]> </script>
+<script xlink:href="../scripts/drag.js"></script>
 </svg>
