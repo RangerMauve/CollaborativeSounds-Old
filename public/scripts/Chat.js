@@ -1,1 +1,6 @@
-// Make sure you have <script xlink:href="/socket.io/socket.io.js"></script> or the HTML version
+// Make sure you have socket.io and JQuery
+Chat = (function(){
+	function requestConnect(room,name,fail){
+		
+	}
+})();
