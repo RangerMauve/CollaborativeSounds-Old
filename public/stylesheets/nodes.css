@@ -1,0 +1,10 @@
+.node {
+	border-radius:10px;
+	min-height:40px;
+	border: 2px solid black;
+	width:200px;
+	text-align:center;
+}
+.node .controls{
+	font-size:10px;
+}
