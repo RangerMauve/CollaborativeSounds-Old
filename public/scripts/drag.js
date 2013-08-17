@@ -1,14 +1,14 @@
 var Dragging = (function(){
 	var curelm, startpos, offset,cancels = [];
 
-	function toSVGSpace(x,y,element){
-		var svg = document.querySelector('svg');
-		var point = svg.createSVGPoint();
-		point.x = x;
-		point.y = y;
-		return point.matrixTransform(element.getScreenCTM().inverse());
-
-	}
+	
+function toSVGSpace(x,y){
+var svg = document.querySelector('svg');
+var point = svg.createSVGPoint();
+point.x = x;
+point.y = y;
+return point.matrixTransform(svg.getScreenCTM().inverse());
+}
 
 	function elementOffsetTo(elm, x, y){
 		var p = elm.getBoundingClientRect();
@@ -82,7 +82,7 @@ var Dragging = (function(){
 	function makedrag(element){
 		var cancel, index; 
 		console.log("Adding drag to:");
-		console.log(element);
+		
 		// Save event handler so it can be removed
 		// When clicked: set current dragged element to this and
 		// Save the current mouse position
