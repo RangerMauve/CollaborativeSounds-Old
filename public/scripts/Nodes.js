@@ -24,6 +24,7 @@ Nodes = (function(){
 		var e = list[id].element;
 		e.parentElement.removeChild(e);
 		delete list[id]
+		document.dispatchEvent(new CustomEvent("removenode")
 	}
 	
 	function register(name, init, onchange){
@@ -49,12 +50,11 @@ Nodes = (function(){
 		}
 	}
 	
-	function create(name, id){
+	function create(name, gid){
+		console.log(arguments);
 		var nodeData = {};
 		var cont = document.createElement("div");
-		var nid = id || "Node"+ranString(4);
-		while(document.getElementById(nid))
-			nid = "Node"+ranString(4);
+		var nid = gid || "Node"+ranString(4);
 		nodeData.id = nid;
 		nodeData.element = cont;
 		cont.id = nid;
@@ -77,6 +77,7 @@ Nodes = (function(){
 		
 		nodeData.update = function(attribute,value, type){
 			var at = cont.querySelector("."+attribute);
+			if(!at)console.log(arguments);
 			if(type === "text"){
 				at.innerHTML = value;
 			} else if(attribute==="position"){
@@ -100,7 +101,8 @@ Nodes = (function(){
 		types.default.init(nodeData);
 		types[name].init(nodeData);
 		list[nid]=nodeData;
-		nodeData.emit("spawned",{id:nid,type:name});
+		if(!gid)
+		document.dispatchEvent(new CustomEvent("create", {detail:{id:nid,type:name}}));
 		return cont;
 	}
 	
@@ -160,6 +162,7 @@ Nodes = (function(){
 		}, function(changed,data){
 			var d = false;
 			if(changed.attribute === "muted" || changed.attribute === "output"){
+				console.log(arguments);
 				if(data.muted){
 					data.sound.output.disconnect();
 				} else {
@@ -235,8 +238,8 @@ Nodes = (function(){
 			});
 		},function(change,data){
 			if(change.attribute === "gain"){
-				data.element.querySelector(".gain").value=data.gain;
-				data.element.querySelector(".curgain").innerHTML=data.gain.toFixed(2);
+				data.element.querySelector(".gain").value=+data.gain;
+				data.element.querySelector(".curgain").innerHTML=+data.gain.toFixed(2);
 				data.sound.gain.gain.value=data.gain;
 			}
 		});

@@ -42,8 +42,11 @@ module.exports = function(app, io){
 						socket.on("attrchange",function(change){
 							socket.broadcast.emit("attrchange",change);
 						});
-						socket.on("create", function(id, type){
+						socket.on("ccreate", function(id, type){
 							socket.broadcast.emit("create",id,type);
+						});
+						socket.on("cremove",function(id){
+							socket.broadcast.emit("remove",id);
 						});
 					} else {
 						var nname = "Spectator"+Math.floor(Math.random(1337)); 

@@ -13,8 +13,8 @@ $("#dolisten").click(function(){
 	spectating = true;
 });
 
-function spawnNode(type){
-	$('#nodecont').append(Nodes.create(type));
+function spawnNode(type, id){
+	$('#nodecont').append(Nodes.create(type, id));
 }
 
 function initChat(room,username,callback){
@@ -66,6 +66,9 @@ function initRoom(room,username){
 				console.error(err);
 				return alert("Error:"+err);
 			}
+			data.oncreate = function(id, type){
+				spawnNode(type,id);
+			};
 			console.log("Chat initialized");
 			$('#loggin').hide();
 			$('#chatwrap').show().draggable();
