@@ -20,11 +20,10 @@ module.exports = function(app, io){
 			chats[req.params.id] = {id:req.params.id,buffer:[],users:{SYSTEM:{}}};
 			var curchat = chats[req.params.id];
 			var users = curchat.users;
-			
 			var chatio = io.of("/chat/"+curchat.id);
 			chatio.on("connection",function(socket){
-				function msg(msg){
-					console.info(curchat.id+": "+(user ? user.name : "")+":"+msg);
+				function msg(message){
+					console.info(curchat.id+": "+(user ? user.name : "")+":"+message);
 				}
 				msg("connection");
 				var lastChat = Date.now();
@@ -49,6 +48,10 @@ module.exports = function(app, io){
 							} else if(wait < Date.now() - lastChat){
 								lastChat = Date.now();
 								chatio.emit("message", name, filterMsg(message));
+								curchat.buffer.reverse();
+								curchat.buffer.push([name, message]);
+								curchat.buffer.reverse();
+								curchat.buffer.length = 20;
 								if(callback instanceof Function)callback(null);
 							} else {
 								if(callback instanceof Function)callback("Spam");
@@ -73,4 +76,4 @@ module.exports = function(app, io){
 			res.json({success:true,message:"Chat Made"});
 		}
 	});
-}
+};

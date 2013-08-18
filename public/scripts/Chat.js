@@ -8,13 +8,13 @@ Chat = (function(){
 		
 		$.getJSON("/chat/request/"+room,function(data){
 			console.log("Chat Request to "+room+":");
-			console.log(data);
+			//console.log(data);
 			socket = io.connect("/chat/"+room);
 			
 			socket.on("connect",function(){
 				socket.emit("join",name,function(err){
 					if(err)return callback(err);
-					callback( 
+					callback(
 						null,
 						{
 							socket:socket,
