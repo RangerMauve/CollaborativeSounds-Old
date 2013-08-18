@@ -27,7 +27,8 @@
 			style = "display:none;">
 		Username:
 		<input	type = "text"
-				name = "user" />
+				name = "user"
+				id="user"/>
 		<br/>
 		Room*:
 		<input	type = "text"
@@ -41,7 +42,8 @@
 				onclick = " $('#loggin').hide();
 							$('#chat').show();
 							$('#workspace').show();
-							$('#spawn').show();" />
+							$('#spawn').show();
+							login();" />
 	</div>
 	<div	id = "chat"
 			style = "display:none;">
@@ -91,35 +93,38 @@
 						name = "wave"
 						value = "wave" />
 		</div> 
-      <script type="text/javascript">      
+      <script type="text/javascript">  
 		var out = document.getElementById("chatter");
 		function append(message){
 			out.innerHTML+=message;
 		}
-	
-		Chat.connect("test","  " + "Anon " +Math.floor(Math.random()*1337),function(err,controls){
-			if(err)append('<div style="color:#F00">Error:'+err+'</div>');
-			
-			$("#chatinput").keyup(function(e){
-				if(e.which == 13)
-					controls.message($("#chatinput").val(),function(err){
+		function login () {
+			var username = document.getElementById("user").value;
+
+			Chat.connect("test", username, function(err,controls){
+				if(err)append('<div style="color:#F00">Error:'+err+'</div>');
+				
+				$("#chatinput").keyup(function(e){
+					if(e.which == 13)
+						controls.message($("#chatinput").val(),function(err){
+							if(err)append('<div style="color:#F00">Error:'+err+'</div>');
+							else $("#chatinput").val("");
+						});
+				});
+				
+				$("#chatsubmit").click(function(e){
+					console.log("Clicked");
+					controls.message($("#chatInput").val(),function(err){
 						if(err)append('<div style="color:#F00">Error:'+err+'</div>');
 						else $("#chatinput").val("");
 					});
-			});
-			
-			$("#chatsubmit").click(function(e){
-				console.log("Clicked");
-				controls.message($("#chatInput").val(),function(err){
-					if(err)append('<div style="color:#F00">Error:'+err+'</div>');
-					else $("#chatinput").val("");
 				});
+				
+				controls.onmessage= function(name,message){
+					append("<div>"+name+": "+message+"</div>");
+	                
+				}; 
 			});
-			
-			controls.onmessage= function(name,message){
-				append("<div>"+name+":"+message+"</div>");
-                
-			}; 
-		});
+		}
 	</script>
 </body>
