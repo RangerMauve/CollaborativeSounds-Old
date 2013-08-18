@@ -17,8 +17,7 @@ function initChat(username){
 		});
 		
 		$("#chatsubmit").click(function(e){
-			console.log("Clicked");
-			controls.message($("#chatInput").val(),function(err){
+			controls.message($("#chatinput").val(),function(err){
 				if(err)append('<div style="color:#F00">Error:'+err+'</div>');
 				else $("#chatinput").val("");
 			});
