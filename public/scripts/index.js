@@ -5,7 +5,7 @@ function initChat(username){
 		out.innerHTML+=message;
 	}
 
-	Chat.connect("test", username, function(err,controls){
+	Chat.connect("lobby", username, function(err,controls){
 		if(err)append('<div style="color:#F00">Error:'+err+'</div>');
 		
 		$("#chatinput").keyup(function(e){
