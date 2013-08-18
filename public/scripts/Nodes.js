@@ -1,6 +1,7 @@
 Nodes = (function(){
 	var types = {};
 	var list = {};
+	var mainout = null;
 	window.context= null;
 	
 	function ranString(length){
@@ -93,6 +94,9 @@ Nodes = (function(){
 	function init(){
 		console.log("Initializing nodes");
 		context = new webkitAudioContext();
+		mainout = context.createGainNode();
+		mainout.gain.value = 0.1;
+		mainout.connect(context.destination);
 		//document.addEventListener("attrchange",function(evt){console.log(evt.detail);});
 		register("default",function(data){
 			data.tosave.push("id");
@@ -141,7 +145,6 @@ Nodes = (function(){
 				remove(data.id);
 			});
 		}, function(changed,data){
-			console.log("CHnaged");
 			var d = false;
 			if(changed.attribute === "muted" || changed.attribute === "output"){
 				if(data.muted){
@@ -151,7 +154,7 @@ Nodes = (function(){
 					if(!val || val==="none"){
 						data.sound.output.disconnect();
 					} else if(val==="main") {
-						data.sound.output.connect(context.destination);
+						data.sound.output.connect(mainout);
 					} else {
 						var tocon = list[val].sound;
 						data.sound.output.connect(tocon.input);
@@ -169,13 +172,13 @@ Nodes = (function(){
 			data.detune = e.querySelector(".detune").innerHTML;
 			data.sound.oscillator = context.createOscillator();
 			data.sound.oscillator.type = data.type || "sine";
-			data.sound.oscillator.frequency = data.frequency || 200;
-			data.sound.oscillator.detune = +data.detune || 0;
+			data.sound.oscillator.frequency.value = data.frequency || 200;
+			data.sound.oscillator.detune.value = +data.detune || 0;
 			data.sound.oscillator.connect(data.sound.output);
 			data.sound.oscillator.start(0);
 			
 			$(e.querySelector(".frequency")).change(function(){
-				data.frequency = this.value;
+				data.frequency = +this.value;
 				data.emitChange("frequency",this.value,"range");
 				data.emitChange("curfrequency",this.value,"text");
 			});
@@ -196,9 +199,9 @@ Nodes = (function(){
 		}, function(change,data){
 			if(change.attribute == "frequency"){
 				data.element.querySelector(".curfrequency").innerHTML = ""+data.frequency;
-				data.sound.oscillator.frequency = data.frequency;
+				data.sound.oscillator.frequency.value = data.frequency;
 			} else if(change.attribute === "detune"){
-				data.sound.oscillator.detune = data.detune;
+				data.sound.oscillator.detune.value = data.detune;
 			} else if(change.attribute === "type"){
 				data.sound.oscillator.type = data.type;
 			}
