@@ -264,6 +264,13 @@ Nodes = (function(){
 			}
 
 		});
+		register("pannode", function(data){
+
+
+		},function(change,data){
+
+			
+		});
 	}
 	
 	return {
