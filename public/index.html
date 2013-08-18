@@ -5,8 +5,8 @@
 	<link rel="stylesheet" href="/stylesheets/nodes.css">
 	<script src="/scripts/jquery.js"></script>
 	<script src="/scripts/jquery-ui-1.10.3.custom.js"></script>	
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/scripts/Chat.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/scripts/Chat.js"></script>
 	<script src="/scripts/Nodes.js"></script>
 	<script src="/scripts/Room.js"></script>
 </head>
@@ -53,15 +53,11 @@
 		Nodes:
 		<button onclick="$('#nodecont').append(Nodes.create('oscillator'))">Oscillator</button>
 		<button onclick="$('#nodecont').append(Nodes.create('gainnode'))">Gain</button>
-		<button id="spawndelay">Delay</button>
-		<button id="spawnpanner">Pan</button>
-		<button id="spawnconvoluter">Convoluter</button>
-				<input	type = "button"
-						name = "passfilter"
-						value = "passfilter" />
-				<input	type = "button"
-						name = "wave"
-						value = "wave" />
+		<button onclick="$('#nodecont').append(Nodes.create('delaynode'))">Delay</button>
+		<button onclick="$('#nodecont').append(Nodes.create('pannnode'))">Pan</button>
+		<button onclick="$('#nodecont').append(Nodes.create('convoluter'))">Convoluter</button>
+		<button onclick="$('#nodecont').append(Nodes.create('passfilter'))">Passfilter</button>
+		<button onclick="$('#nodecont').append(Nodes.create('wavenode'))">Wave</button>
 	</div> 
 <!-- These are the definitions for the different nodes -->
 <span id="nodedefs">
@@ -104,7 +100,7 @@
 			<button class="incdetune">+</button>
 		</div>
 	</div>
-	<!-- End Oscilaltor -->
+	<!-- Oscilaltor End -->
 	<!-- Gain -->
 	<div id="gainnode" class="gainnode">
 		<div>
@@ -116,6 +112,14 @@
 		</div>		
 	</div>
 	<!-- Gain End -->
+	<!-- Delay -->
+	<div id="delaynode" class="delaynode">
+		<div>
+			Delay:
+
+		</div>
+	</div>
+	<!-- Delay End -->
 </span>
 	<script src="/scripts/index.js"></script> 
 </body>
