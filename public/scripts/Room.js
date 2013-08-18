@@ -3,7 +3,7 @@ Room = (function(){
 		$.getJSON("/room/request/"+room,function(data){
 			if(!data.success)return callback("Failed");
 			
-			var socket = io.connect("/room/"+room,{reconnect: false});
+			var socket = io.connect("ws://collsounds-nullset.rhcloud.com:8000/room/"+room,{reconnect: false});
 			socket.on("connect",function(){
 				console.log("Socket opened");
 				socket.emit("join",credentials,function(err){
