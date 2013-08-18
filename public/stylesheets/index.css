@@ -69,3 +69,6 @@ html {
 	bottom:2px;
 	right:64px;
 }
+.speconly {
+	display:none;
+}

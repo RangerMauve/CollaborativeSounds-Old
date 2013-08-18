@@ -16,18 +16,22 @@
 		<button id="dolisten">Just Listen</button>
 	</div>
 	<div id = "loggin" class="blurOutline">
-		Username:
+		Username<span class="speconly">*</span>:
 		<div>
-			<input	type = "text" id="username"/>
+			<input	type = "text" id="username" placeholder="Anon"/>
 		</div>
 		Room:
 		<div>
-			<input	type = "text" id="roomname"/>
+			<input	type = "text" id="roomname" placeholder="Lobby"/>
 		</div>
 		<div>
 			<button onclick="login();">Go</button>
 		</div>
+		<div class="speconly">* Optional</div>
 	</div>
+	<span id = "workspace" style = "display:none;">
+		<span id="nodecont"></span>
+	</span>
 	<div id="chatwrap" class="blurOutline">
 		<div id = "chat">
 			<div id = "chatter">
@@ -38,9 +42,6 @@
 			</div>
 		</div>
 	</div>
-	<span id = "workspace" style = "display:none;">
-		<span id="nodecont"></span>
-	</span>
 	<div id = "spawn" class="blurOutline">
 		Nodes:
 		<button onclick="spawnNode('oscillator')">Oscillator</button>

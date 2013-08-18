@@ -20,7 +20,8 @@ module.exports = function(app, io){
 			roomio.on("connection",function(socket){
 				var user = null;
 				function msg(msg){
-					console.log(room+": "+ user.name || ""+": "+msg);
+				
+					console.log(room+": "+ (user?user.name:"")+": "+msg);
 				}
 				msg("Connection");
 				socket.on("join",function(cred,callback){
@@ -50,8 +51,10 @@ module.exports = function(app, io){
 					user.name = name || "Spectator"+Math.floor(Math.random(1337));
 					socket.broadcast.emit("joinedroom",user.name);
 					socket.on("disconnect",function(){
+						delete users[user.name.toUpperCase()]
 						socket.broadcast.emit("leftroom",user.name);
 					});
+					callback(null);
 				});
 			});
 			

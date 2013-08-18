@@ -1,31 +1,39 @@
 Nodes.init();
 
+var spectating = false;
 $("#doparticipate").click(function(){
 	$('#participate').hide();
-	$('#loggin').show()
+	$('#loggin').show();
 });
 
 $("#dolisten").click(function(){
 	$('#participate').hide();
-	login();
+	$('#loggin').show();
+	$(".speconly").show();
+	spectating = true;
 });
 
 function spawnNode(type){
 	$('#nodecont').append(Nodes.create(type));
 }
 
-function initChat(username){
+function initChat(room,username,callback){
 	var out = document.getElementById("chatter");
 	function append(message){
 		out.innerHTML+=message;
 	}
 
-	Chat.connect("lobby", username, function(err,controls){
+	Chat.connect(room, username, function(err,controls){
+		if(callback instanceof Function)
+			callback(err)		
+		if(err){
+			return append('<div style="color:#F00">Error:'+err+'</div>');
+		}
+		
 		controls.onmessage= function(name,message){
 			append("<div>"+name+': <span class="usermessage">'+message+"</span></div>");
 			$(out).animate({scrollTop:out.scrollHeight}, 1000);
-		}; 
-		if(err)return append('<div style="color:#F00">Error:'+err+'</div>');
+		};
 		
 		$("#chatinput").keyup(function(e){
 			if(e.which == 13)
@@ -43,15 +51,34 @@ function initChat(username){
 		});
 	});
 }
+
+function initRoom(room,username){
+	console.log("Attempting room connect to "+room);
+	Room.connect(room, {name:username,spectate:spectating},function(err,data){
+		if(err){
+			data.disconnect();
+			console.error(err);
+			return alert("Error:"+err);
+		}
+		console.log("Room connected");
+		initChat("lobby",username,function(err,chat){
+			if(err){
+				console.error(err);
+				return alert("Error:"+err);
+			}
+			console.log("Chat initialized");
+			$('#loggin').hide();
+			$('#chatwrap').show().draggable();
+			$('#workspace').show();
+			if(!spectating)
+				$('#spawn').show().draggable();
+		});
+	})
+}
 function login () {
-	$('#loggin').hide();
-	$('#chatwrap').show().draggable();
-	$('#workspace').show();
-	$('#spawn').show().draggable();;
-	
+	console.log("Logging in");
 	var username = document.getElementById("username").value;
-		if (username == "") {
-		username = "User"+Math.floor(Math.random()*1337);
-	}
-	initChat(username);
+	if(spectating && !username)
+		username = "Anon"+Math.floor(Math.random()*1337);
+	initRoom("lobby",username);
 }
