@@ -10,6 +10,15 @@ Nodes = (function(){
 		return res;
 	}
 	
+	function clearList(){
+		var key,e;
+		for(var key in list){
+			e = list[key].element;
+			e.parentElement.removeChild(e);
+		}
+		list = [];
+	}
+	
 	function register(name, structure, init){
 		if(!init){
 			init = structure;
@@ -55,11 +64,12 @@ Nodes = (function(){
 		types.default.init(nodeData);
 		types[name].init(nodeData);
 		list[nid]=nodeData;
+		nodeData.emit("spawned",{id:nid,type:name});
 		return cont;
 	}
 	
 	function init(){
-		document.addEventListener("attrchange",function(evt){console.log(evt.detail);});
+		//document.addEventListener("attrchange",function(evt){console.log(evt.detail);});
 		register("default",function(data){
 			data.tosave.push("id");
 			data.element.querySelector(".id").innerHTML = data.id;

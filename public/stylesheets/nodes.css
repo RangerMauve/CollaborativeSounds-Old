@@ -3,14 +3,17 @@
 }
 
 .node {
-	border-radius:10px;
 	padding:10px;
 	min-height:40px;
-	border: 2px solid black;
 	width:200px;
 	text-align:center;
 	font-size:12px;
 	display:inline-block;
+	border:1px solid #444;
+	-moz-box-shadow: 0px 0px 10px 10px rgba(200,200,200,0.5);
+	-webkit-box-shadow: 0px 0px 10px 10px rgba(200,200,200,0.5);
+	box-shadow: 0px 0px 10px 10px rgba(200,200,200,0.5);	
+	border-radius:4px;
 }
 
 /*Oscillator node styles*/

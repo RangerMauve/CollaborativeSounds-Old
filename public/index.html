@@ -1,109 +1,111 @@
 <!DOCTYPE html>
 <head>
 	<title>Collaborative Sounds</title>
-	<script type="text/javascript" src="scripts/jquery.js"></script> 
-    
 	<link rel="stylesheet" type="text/css" href="stylesheets/index.css"> 
-    <script src="/scripts/jquery.js"></script>
+	<link rel="stylesheet" href="/stylesheets/nodes.css">
+	<script src="scripts/jquery.js"></script> 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/scripts/Chat.js"></script>
+	<script src="/scripts/jquery-ui-1.10.3.custom.js"></script>
+	<script src="/scripts/Nodes.js"></script>
 </head>
 <body>
-	<div	id = "participate">
-		<input	type = "button"
-				name = "participate"
-				value = "paticipate"
-				onclick = "	$('#participate').hide();
-							$('#loggin').show();"/>
-		<input	type = "button"
-				name = "listen"
-				value = "just listen"
-				onclick = " $('#participate').hide();
-							login();" />
+	<span id="nodedefs">
+	<!-- Default Node -->
+	<div id="default" class="node">
+		<div class= "id"></div>
+		<div class="controls">
+				Output:
+				<select name = "output">
+						<option value = "null">none</option>
+				</select>
+				<button>&#9654;</button>
+				<button>X</button>
+		</div>
+		<div class= "content"></div>
 	</div>
-	<div	id = "loggin"
-			style = "display:none;">
+	<!-- Default End -->
+	<!-- Oscilaltor -->
+	<div id="oscillator" class="oscillator">
+		<div>
+			Frequency:
+			<span class="curfrequency">200</span>
+			<input class="frequency" type="range" min="40" max="1000" value="200"/>
+		</div>
+		<div>
+			Type:
+			<select class="type">
+				<option value="sine">Sine</option>
+				<option value="square">Square</option>
+				<option value="sawtooth">Sawtooth</option>
+				<option value="triangle">Triangle</option>
+			</select>
+		</div>
+		<div>Detune:</div>
+		<div class="control">
+			<button class="decdetune">-</button>
+			<div class="detune">0</div>
+			<button class="incdetune">+</button>
+		</div>
+	</div>
+	<!-- End Oscilaltor -->
+	</span>
+	<div id = "participate">
+		<button
+			onclick="$('#participate').hide();$('#loggin').show();"
+			>
+			Participate
+		</button>
+		<button
+			onclick="$('#participate').hide();login();"
+			>
+			Just Listen
+		</button>
+	</div>
+	<div id = "loggin" style = "display:none;">
 		Username:
-		<input	type = "text"
-				name = "user"
-				id="user"/>
+		<input	type = "text" id="username"/>
 		<br/>
-		Room*:
-		<input	type = "text"
-				name = "room" />
+		Room:
+		<input	type = "text" id="roomname"/>
 		<br/>
-		*optional
-		<br/>
-		<input	type = "button"
-				name = "blogin"
-				value = "go"
-				onclick = " $('#loggin').hide();
-							login();" />
+		<button onclick="login();">Go</button>
 	</div>
-	<div	id = "chat"
-			style = "display:none;">
-		<div id = "chatter">
-		</div>
-		<div id = "typing">
-			<input	id="chatinput" type="text"/>
-			<button id="chatsubmit">Send</button>
+	<div id="chatwrap" class="blurOutline">
+		<div id = "chat">
+			<div id = "chatter">
+			</div>
+			<div id = "typing">
+				<input	id="chatinput" type="text"/>
+				<button id="chatsubmit">Send</button>
+			</div>
 		</div>
 	</div>
-	<div	id = "workspace"
-			style = "display:none;">
-	</div>
-	<div	id = "spawn"
-			style = "display:none;">
-				Spawn
-				<br />
-				<input	type = "button"
-						name = "shared"
-						value = "shared" />
-				<br />
-				<input	type = "button"
-						name = "oscillator"
-						value = "oscillator" />
-				<br />
-				<input	type = "button"
-						name = "gain"
-						value = "gain" />
-				<br />
-				<input	type = "button"
-						name = "delay"
-						value = "delay" />
-				<br />
-				<input	type = "button"
-						name = "panner"
-						value = "panner" />
-				<br />
-				<input	type = "button"
-						name = "convoluter"
-						value = "convoluter" />
-				<br />
+	<span id = "workspace" style = "display:none;">
+		<span id="nodecont"></span>
+	</span>
+	<div id = "spawn" class="blurOutline">
+		Nodes:
+		<button onclick="$('#nodecont').append(Nodes.create('oscillator'))">Oscillator</button>
+		<button id="spawngain">Gain</button>
+		<button id="spawndelay">Delay</button>
+		<button id="spawnpanner">Pan</button>
+		<button id="spawnconvoluter">Convoluter</button>
 				<input	type = "button"
 						name = "passfilter"
 						value = "passfilter" />
-				<br />
 				<input	type = "button"
 						name = "wave"
 						value = "wave" />
-		</div> 
-      <script type="text/javascript">  
-		var out = document.getElementById("chatter");
-		function append(message){
-			out.innerHTML+=message;
-		}
-		function login () {
-			$('#chat').show();
-			$('#workspace').show
-			$('#spawn').show();
-
-			var username = document.getElementById("user").value;
-
-			if (username == "") {
-				username = "User"+Math.floor(Math.random()*1337);
+	</div> 
+	<script type="text/javascript">
+		Nodes.init();
+		function initChat(username){
+			var out = document.getElementById("chatter");
+			function append(message){
+				out.innerHTML+=message;
 			}
-
+		
 			Chat.connect("test", username, function(err,controls){
 				if(err)append('<div style="color:#F00">Error:'+err+'</div>');
 				
@@ -124,10 +126,24 @@
 				});
 				
 				controls.onmessage= function(name,message){
-					append("<div>"+name+": "+message+"</div>");
+					append("<div>"+name+': <span class="usermessage">'+message+"</span></div>");
 	                
 				}; 
 			});
+		}
+		function login () {
+			$('#loggin').hide();
+			$('#chatwrap').show().draggable();
+			$('#workspace').show();
+			$('#spawn').show().draggable();;
+			
+
+			var username = document.getElementById("username").value;
+
+			if (username == "") {
+				username = "User"+Math.floor(Math.random()*1337);
+			}
+			initChat(username);
 		}
 	</script>
 </body>

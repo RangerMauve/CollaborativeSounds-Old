@@ -69,6 +69,10 @@ module.exports = function(app, io){
 								if(callback instanceof Function)callback(null);
 							}
 						});
+						socket.on("disconnect",function(){
+							msg("left");
+							delete users[user.name.toUpperCase()];
+						});
 						if(callback instanceof Function)callback(null);
 					}
 				});
