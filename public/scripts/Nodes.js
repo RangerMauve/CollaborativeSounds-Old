@@ -229,6 +229,13 @@ Nodes = (function(){
 				data.sound.gain.gain.value=data.gain;
 			}
 		});
+		register("delaynode", function(data){
+
+			
+		},function(change, data){
+
+
+		})
 	}
 	
 	return {
