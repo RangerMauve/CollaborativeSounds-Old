@@ -93,8 +93,7 @@ Nodes = (function(){
 			types.default.onchange(evt.detail,nodeData);
 			types[name].onchange(evt.detail,nodeData);
 		});
-		cont.className = "node";
-		cont.innerHTML = types.default.structure;
+		cont.innerHTML = '<span class="nodewra"><div class="node">'+types.default.structure+"<div></span>";
 		var contr = cont.querySelector(".content");
 		contr.innerHTML = types[name].structure;
 		contr.className+=" "+name;

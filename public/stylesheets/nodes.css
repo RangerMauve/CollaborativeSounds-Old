@@ -2,11 +2,13 @@
 	display:none;
 }
 #nodecont {
-	position:fixed;
-	overflow:auto;
+	position:absolute;
 	top:0px;
-	right:0px;
 	left:0px;
+}
+.nodewra {
+	position:absolute;
+	top:0px;
 	bottom:0px;
 }
 .node {
@@ -15,13 +17,15 @@
 	width:200px;
 	text-align:center;
 	font-size:12px;
-	display:block;
 	border:1px solid #DDD;
 	-moz-box-shadow: 1px 4px 6px 6px  rgba(200,200,200,0.5);
 	-webkit-box-shadow: 1px 4px 6px 6px  rgba(200,200,200,0.5);
 	box-shadow: 1px 4px 6px 6px  rgba(200,200,200,0.5);   
 	border-radius:4px;
 	background: rgba(255,255,255,0.3);
+	position:absolute;
+	top:0px;
+	left:0px;
 }
 
 /*Oscillator node styles*/
