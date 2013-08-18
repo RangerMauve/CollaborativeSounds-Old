@@ -60,6 +60,7 @@ Nodes = (function(){
 					value:value
 				});
 		}
+		
 		nodeData.update = function(attribute,value, type){
 			var at = cont.querySelector("."+attribute);
 			if(type === "text"){
