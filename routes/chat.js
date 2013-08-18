@@ -42,7 +42,13 @@ module.exports = function(app, io){
 						users[name.toUpperCase()]= user;
 						msg("joined");
 						chatio.emit("message", "System", user.name+" joined the room");
-						console.info(curchat.buffer);
+						curchat.buffer.reverse();
+						curchat.buffer.forEach(function(index, value, array){
+							if(value[0] !== null){
+								socket.emit("message", value[0], value[1]);
+							}
+						});
+						curchat.buffer.reverse();
 						socket.on("message",function(message, callback){
 							msg("says:"+message);
 							if(!message){
@@ -67,7 +73,7 @@ module.exports = function(app, io){
 								args[0] === "/h" ||
 								args[0] === "/?"
 							){
-								socket.emit("message", "Commands", "<br>name NewName\n\t/list");
+								socket.emit("message", "Commands", "<br>/name NewName <br>/list");
 							} else if (args[0] === "/list") {
 								var us = users;
 								socket.emit("message", "Users", users.value);
