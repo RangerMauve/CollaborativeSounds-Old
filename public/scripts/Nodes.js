@@ -160,6 +160,9 @@ Nodes = (function(){
 				data.emitChange("detune", data.detune,"text");
 			});
 		});
+		register("gain",function(data){
+			
+		});
 	}
 	
 	return {
