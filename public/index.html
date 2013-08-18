@@ -51,7 +51,7 @@
 	<div id = "spawn" class="blurOutline">
 		Nodes:
 		<button onclick="$('#nodecont').append(Nodes.create('oscillator'))">Oscillator</button>
-		<button id="spawngain">Gain</button>
+		<button onclick="$('#nodecont').append(Nodes.create('gain'))">Gain</button>
 		<button id="spawndelay">Delay</button>
 		<button id="spawnpanner">Pan</button>
 		<button id="spawnconvoluter">Convoluter</button>
@@ -107,9 +107,9 @@
 	<!-- Gain -->
 	<div id="gain" class="gain">
 		<div>
-			Frequency:
-			<span class="curgain">200</span>
-			<input class="gain" type="range" min="0" max="1" value="0" step="0.1"/>
+			Gain:
+			<span class="curgain">1</span>
+			<input class="gain" type="range" min="0" max="1" value="1" step="0.1"/>
 		</div>		
 	</div>
 	<!-- Gain End -->

@@ -3,14 +3,18 @@
 }
 
 .node {
-	border-radius:10px;
 	padding:10px;
 	min-height:40px;
-	border: 2px solid black;
 	width:200px;
 	text-align:center;
 	font-size:12px;
 	display:inline-block;
+	border:1px solid #DDD;
+	-moz-box-shadow: 1px 4px 6px 6px  rgba(200,200,200,0.5);
+	-webkit-box-shadow: 1px 4px 6px 6px  rgba(200,200,200,0.5);
+	box-shadow: 1px 4px 6px 6px  rgba(200,200,200,0.5);   
+	border-radius:4px;
+	background: rgba(255,255,255,0.3);
 }
 
 /*Oscillator node styles*/
@@ -41,10 +45,7 @@
 }
 /*Oscillator style end*/ 
 
-
-
 /*   Gain style    */ 
-
 .node .gain {
 	text-align:left;
 }
