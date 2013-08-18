@@ -36,6 +36,19 @@ Nodes = (function(){
 		}
 	}
 	
+	function update(change){
+		var dat;
+		if(dat = list[change.id]){
+			dat.update(change.attribute,change.value,change.type);
+			dat.element.dispatchEvent(
+				new CustomEvent("attrchange",{
+					detail:change,
+					bubbles:false
+				})
+			);
+		}
+	}
+	
 	function create(name){
 		var nodeData = {};
 		var cont = document.createElement("div");
