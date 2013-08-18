@@ -2,7 +2,7 @@ var context = new webkitAudioContext();
 
 var gain = context.createGainNode(); 
 
-$(".gain").change(function() {
+$(".gainRange").change(function() {
   
     
 
