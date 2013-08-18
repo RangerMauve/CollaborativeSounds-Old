@@ -1,4 +1,19 @@
 Nodes.init();
+
+$("#doparticipate").click(function(){
+	$('#participate').hide();
+	$('#loggin').show()
+});
+
+$("#dolisten").click(function(){
+	$('#participate').hide();
+	login();
+});
+
+function spawnNode(type){
+	$('#nodecont').append(Nodes.create(type));
+}
+
 function initChat(username){
 	var out = document.getElementById("chatter");
 	function append(message){

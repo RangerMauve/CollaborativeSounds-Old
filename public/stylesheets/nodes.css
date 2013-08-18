@@ -2,7 +2,12 @@
 	display:none;
 }
 #nodecont {
-	position:absolute;
+	position:fixed;
+	overflow:auto;
+	top:0px;
+	right:0px;
+	left:0px;
+	bottom:0px;
 }
 .node {
 	padding:10px;
@@ -10,7 +15,7 @@
 	width:200px;
 	text-align:center;
 	font-size:12px;
-	display:inline-block;
+	display:block;
 	border:1px solid #DDD;
 	-moz-box-shadow: 1px 4px 6px 6px  rgba(200,200,200,0.5);
 	-webkit-box-shadow: 1px 4px 6px 6px  rgba(200,200,200,0.5);

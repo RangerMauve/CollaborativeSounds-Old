@@ -236,7 +236,6 @@ Nodes = (function(){
 			});
 		},function(change,data){
 			if(change.attribute === "gain"){
-				console.log(data.gain);
 				data.element.querySelector(".gain").value=data.gain;
 				data.element.querySelector(".curgain").innerHTML=data.gain.toFixed(2);
 				data.sound.gain.gain.value=data.gain;

@@ -22,7 +22,9 @@ module.exports = function(app, io){
 				function msg(msg){
 					console.log(room+": "+ user.name || ""+": "+msg);
 				}
+				msg("Connection");
 				socket.on("join",function(cred,callback){
+					msg("join from "+JSON.stringify(cred));
 					var name = cred.name;
 					var pass = cred.password;
 					var spect = cred.spectate;
