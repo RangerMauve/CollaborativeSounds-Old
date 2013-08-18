@@ -43,9 +43,11 @@ module.exports = function(app, io){
 						msg("joined");
 						chatio.emit("message", "System", user.name+" joined the room");
 						curchat.buffer.reverse();
-						curchat.buffer.forEach(function(index, value, array){
-							if(value[0] !== null){
-								socket.emit("message", value[0], value[1]);
+						curchat.buffer.forEach(function(message, index, array){
+							if(message[0] !== null){
+								setTimeout(function(){
+									socket.emit("message", message[0], message[1]);
+								}, 250);
 							}
 						});
 						curchat.buffer.reverse();
@@ -79,7 +81,7 @@ module.exports = function(app, io){
 								socket.emit("message", "Users", users.value);
 							}
 						});
-						function rename(newname,callback){
+						rename = function(newname,callback){
 							msg("rename attempt to "+newname);
 							if(newname.toUpperCase() in users){
 								if(callback instanceof Function)callback("NameRegistered");
@@ -90,7 +92,7 @@ module.exports = function(app, io){
 								socket.broadcast.emit("renamed",user.name, newname);
 								if(callback instanceof Function)callback(null);
 							}
-						}
+						};
 						socket.on("disconnect",function(){
 							msg("left");
 							chatio.emit("message","System",user.name+" left the room");
