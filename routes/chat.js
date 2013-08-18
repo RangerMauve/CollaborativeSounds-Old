@@ -65,12 +65,14 @@ module.exports = function(app, io){
 							} else {
 								delete users[user.name.toUpperCase()];
 								users[newname.toUpperCase()] = user;
+								chatio.emit("message","System",user.name+" is now "+newname);
 								socket.broadcast.emit("renamed",user.name, newname);
 								if(callback instanceof Function)callback(null);
 							}
 						});
 						socket.on("disconnect",function(){
 							msg("left");
+							chatio.emit("message","System",user.name+" left the chat");
 							delete users[user.name.toUpperCase()];
 						});
 						if(callback instanceof Function)callback(null);

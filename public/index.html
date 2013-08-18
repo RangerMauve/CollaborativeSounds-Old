@@ -10,47 +10,7 @@
 	<script src="/scripts/Nodes.js"></script>
 </head>
 <body>
-<span id="nodedefs">
-	<!-- Default Node -->
-	<div id="default" class="node">
-		<div class= "id"></div>
-		<div class="controls">
-				Output:
-				<select name = "output">
-						<option value = "null">none</option>
-				</select>
-				<button>&#9654;</button>
-				<button>X</button>
-		</div>
-		<div class= "content"></div>
-	</div>
-	<!-- Default End -->
-	<!-- Oscilaltor -->
-	<div id="oscillator" class="oscillator">
-		<div>
-			Frequency:
-			<span class="curfrequency">200</span>
-			<input class="frequency" type="range" min="40" max="1000" value="200"/>
-		</div>
-		<div>
-			Type:
-			<select class="type">
-				<option value="sine">Sine</option>
-				<option value="square">Square</option>
-				<option value="sawtooth">Sawtooth</option>
-				<option value="triangle">Triangle</option>
-			</select>
-		</div>
-		<div>Detune:</div>
-		<div class="control">
-			<button class="decdetune">-</button>
-			<div class="detune">0</div>
-			<button class="incdetune">+</button>
-		</div>
-	</div>
-	<!-- End Oscilaltor -->
-</span>
-	<div id = "participate">
+	<div id = "participate" class="blurOutline">
 		<button
 			onclick="$('#participate').hide();$('#loggin').show();"
 			>
@@ -62,7 +22,7 @@
 			Just Listen
 		</button>
 	</div>
-	<div id = "loggin" style = "display:none;">
+	<div id = "loggin" class="blurOutline">
 		Username:
 		<div>
 			<input	type = "text" id="username"/>
@@ -102,5 +62,48 @@
 						name = "wave"
 						value = "wave" />
 	</div> 
+<!-- These are the definitions for the different nodes -->
+<span id="nodedefs">
+	<!-- Default Node -->
+	<div id="default" class="node">
+		<div>
+			<span class="id"></span>
+			<button class="mute">&#9654;</button>
+			<button class="close">X</button>
+		</div>
+		<div class="controls">
+			Output:
+			<select class="output">
+				<option value = "null">none</option>
+			</select>
+		</div>
+		<div class= "content"></div>
+	</div>
+	<!-- Default End -->
+	<!-- Oscilaltor -->
+	<div id="oscillator" class="oscillator">
+		<div>
+			Frequency:
+			<span class="curfrequency">200</span>
+			<input class="frequency" type="range" min="40" max="1000" value="200"/>
+		</div>
+		<div>
+			Type:
+			<select class="type">
+				<option value="sine">Sine</option>
+				<option value="square">Square</option>
+				<option value="sawtooth">Sawtooth</option>
+				<option value="triangle">Triangle</option>
+			</select>
+		</div>
+		<div>Detune:</div>
+		<div class="control">
+			<button class="decdetune">-</button>
+			<div class="detune">0</div>
+			<button class="incdetune">+</button>
+		</div>
+	</div>
+	<!-- End Oscilaltor -->
+</span>
 	<script src="/scripts/index.js"></script>
 </body>

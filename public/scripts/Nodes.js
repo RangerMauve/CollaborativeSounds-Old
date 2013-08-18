@@ -13,7 +13,7 @@ Nodes = (function(){
 	function clearList(){
 		var key,e;
 		for(var key in list){
-			
+			remove(key);
 		}
 	}
 	
@@ -60,6 +60,18 @@ Nodes = (function(){
 					value:value
 				});
 		}
+		nodeData.update = function(attribute,value, type){
+			var at = cont.querySelector("."+attribute);
+			if(type === "text"){
+				at.innerHTML = value;
+			} else if(attribute==="position"){
+				cont.style.top = value.top;
+				cont.style.left= value.left;
+			} else {
+				at.value = value;
+			}
+		}
+		
 		cont.className = "node";
 		cont.innerHTML = types.default.structure;
 		var contr = cont.querySelector(".content");
@@ -76,6 +88,9 @@ Nodes = (function(){
 		//document.addEventListener("attrchange",function(evt){console.log(evt.detail);});
 		register("default",function(data){
 			data.tosave.push("id");
+			data.tosave.push("output");
+			data.tosave.push("muted");
+			data.muted = false;
 			data.element.querySelector(".id").innerHTML = data.id;
 			$(data.element).draggable({
 				drag:function(){
@@ -85,6 +100,33 @@ Nodes = (function(){
 						"point"
 					);
 				}
+			});
+			var outsel = data.element.querySelector(".output");
+			$(outsel).mousedown(function(){
+				var res = '<option></option><option value="null">none</option><option value="main">MainOutput</option>';
+				for(var k in list){
+					if(k !== data.id)
+						res += '<option value="'+k+'">'+k+"</option>";
+				}
+				outsel.innerHTML = res;
+			})
+			$(outsel).change(function(){
+				data.output = outsel.value;
+				data.emitChange("output",outsel.value, "select");
+			});
+			var mutbut = data.element.querySelector(".mute");
+			$(mutbut).click(function(){
+				data.muted = !data.muted;
+				if(data.muted){
+					mutbut.innerHTML = "&#9654;";
+				} else {
+					mutbut.innerHTML = "&#9632;"
+				}
+				data.emitChange("muted",data.muted,"abstract");mutbut.inn
+			});
+			$(data.element.querySelector(".close")).click(function(){
+				data.emit("removed",{id:data.id});
+				remove(data.id);
 			});
 		});
 		register("oscillator",function(data){
@@ -120,14 +162,14 @@ Nodes = (function(){
 	}
 	
 	return {
-		structure:function(name){
+		type:function(name){
 			return types[name];
 		},
 		register:register,
 		create:create,
 		init:init,
-		get list(){
-			return list;
-		}
+		get list(){return list;},
+		clear:clearList,
+		remove:remove
 	}
 })();
