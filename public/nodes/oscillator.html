@@ -7,6 +7,7 @@
 <body>
 
 <div id="osc">
+    
     <p>Oscillator</p>
 <input id="start" type="button" value="start" />
 <input id="stop" type="button" value="stop" />
@@ -21,9 +22,12 @@
 
 Freq:<input id="oscFreq" type="range" min="50" max="2500" step="1" value="0" />
 Detune:<input id="oscDet" type="range" min="50" max="2500" step="1" value="90" /> 
-Quality:<input id="oscQ" type="range" min="0" max="50" step="1" value="10" /> 
-Gain:<input id="vol" type="range" min="10" max="100" value="100" step="1" />
+Quality:<input id="oscQ" type="range" min="0" max="50" step="1" value="10" />  
+Delay:<input id="del" type="range" min="0" max="0.999" step="0.001" value="0.500"  />
+Gain:<input id="vol" type="range" min="0" max="1" value="0" step="0.1" />
 </div>
+
+<canvas style="background: white; border: solid 1px;"></canvas>
 
 
 <script src="../scripts/oscillator.js"></script>

@@ -7,7 +7,10 @@ var filter = context.createBiquadFilter();
 
 var gain = context.createGainNode(); 
 
-filter = context.createBiquadFilter();
+var filter = context.createBiquadFilter();  
+var delay = context.createDelay(); 
+
+
 
 $("#selectores").change(function() {
     var selectores = document.getElementById("selectores");
@@ -23,11 +26,16 @@ oscilator.noteOn(0);
 
 $("#start").click(function() {
     console.log('STARTED');
-    oscilator.connect(filter);
-    oscilator.connect(gain);
-    filter.connect(context.destination);
-    gain.connect(context.destination);
+    
+    
+    
     oscilator.connect(context.destination);
+    oscilator.connect(filter);
+    filter.connect(context.destination);
+    oscilator.connect(delay);
+    delay.connect(context.destination);
+    oscilator.connect(gain);
+    gain.connect(context.destination);
 
 });
 
@@ -44,6 +52,13 @@ $("#oscFreq").change(function () {
     var freq = document.getElementById('oscFreq').value;
     oscilator.frequency.value=this.value;
 
+}); 
+
+
+$("#del").change(function () {
+
+    delay.DelayTime=this.value;
+    console.log(this.value);
 });
 
 
