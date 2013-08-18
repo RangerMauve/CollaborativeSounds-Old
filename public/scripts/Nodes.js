@@ -1,6 +1,7 @@
 Nodes = (function(){
 	var types = {};
 	var list = {};
+	window.context= null;
 	
 	function ranString(length){
 		var s = [0,1,2,3,4,5,6,7,8,8,'A','B','C','D','E','F'];
@@ -23,15 +24,13 @@ Nodes = (function(){
 		delete list[id]
 	}
 	
-	function register(name, structure, init){
-		if(!init){
-			init = structure;
-			structure = document.getElementById(name).innerHTML;
-		}
+	function register(name, init, onchange){
+		var structure = document.getElementById(name).innerHTML;
 		types[name] = {
 			name:name,
 			structure:structure,
-			init:init
+			init:init,
+			onchange:onchange
 		}
 	}
 	
@@ -71,8 +70,14 @@ Nodes = (function(){
 			} else {
 				at.value = value;
 			}
+			if(nodeData.tosave.indexOf(attribute) >=0){
+				nodeData[attribute]=value;
+			}
 		}
-		
+		cont.addEventListener("attrchange",function(evt){
+			types.default.onchange(evt.detail,nodeData);
+			types[name].onchange(evt.detail,nodeData);
+		});
 		cont.className = "node";
 		cont.innerHTML = types.default.structure;
 		var contr = cont.querySelector(".content");
@@ -86,12 +91,17 @@ Nodes = (function(){
 	}
 	
 	function init(){
+		console.log("Initializing nodes");
+		context = new webkitAudioContext();
 		//document.addEventListener("attrchange",function(evt){console.log(evt.detail);});
 		register("default",function(data){
 			data.tosave.push("id");
 			data.tosave.push("output");
 			data.tosave.push("muted");
 			data.muted = false;
+			data.sound = {};
+			data.sound.input = context.createGainNode();
+			data.sound.output = context.createGainNode();
 			data.element.querySelector(".id").innerHTML = data.id;
 			$(data.element).draggable({
 				drag:function(){
@@ -112,7 +122,8 @@ Nodes = (function(){
 				outsel.innerHTML = res;
 			})
 			$(outsel).change(function(){
-				data.output = outsel.value;
+				var val = outsel.value;
+				data.output = val;
 				data.emitChange("output",outsel.value, "select");
 			});
 			var mutbut = data.element.querySelector(".mute");
@@ -123,12 +134,30 @@ Nodes = (function(){
 				} else {
 					mutbut.innerHTML = "&#9632;"
 				}
-				data.emitChange("muted",data.muted,"abstract");mutbut.inn
+				data.emitChange("muted",data.muted,"abstract");
 			});
 			$(data.element.querySelector(".close")).click(function(){
 				data.emit("removed",{id:data.id});
 				remove(data.id);
 			});
+		}, function(changed,data){
+			console.log("CHnaged");
+			var d = false;
+			if(changed.attribute === "muted" || changed.attribute === "output"){
+				if(data.muted){
+					data.sound.output.disconnect();
+				} else {
+					var val = data.output;
+					if(!val || val==="none"){
+						data.sound.output.disconnect();
+					} else if(val==="main") {
+						data.sound.output.connect(context.destination);
+					} else {
+						var tocon = list[val].sound;
+						data.sound.output.connect(tocon.input);
+					}
+				}
+			}
 		});
 		register("oscillator",function(data){
 			data.tosave.push("frequency");
@@ -138,10 +167,15 @@ Nodes = (function(){
 			data.frequency = e.querySelector(".frequency").value;
 			data.type = e.querySelector(".type").value;
 			data.detune = e.querySelector(".detune").innerHTML;
+			data.sound.oscillator = context.createOscillator();
+			data.sound.oscillator.type = data.type || "sine";
+			data.sound.oscillator.frequency = data.frequency || 200;
+			data.sound.oscillator.detune = +data.detune || 0;
+			data.sound.oscillator.connect(data.sound.output);
+			data.sound.oscillator.start(0);
 			
 			$(e.querySelector(".frequency")).change(function(){
 				data.frequency = this.value;
-				e.querySelector(".curfrequency").innerHTML = ""+this.value;
 				data.emitChange("frequency",this.value,"range");
 				data.emitChange("curfrequency",this.value,"text");
 			});
@@ -159,6 +193,15 @@ Nodes = (function(){
 				e.querySelector(".detune").innerHTML = data.detune;
 				data.emitChange("detune", data.detune,"text");
 			});
+		}, function(change,data){
+			if(change.attribute == "frequency"){
+				data.element.querySelector(".curfrequency").innerHTML = ""+data.frequency;
+				data.sound.oscillator.frequency = data.frequency;
+			} else if(change.attribute === "detune"){
+				data.sound.oscillator.detune = data.detune;
+			} else if(change.attribute === "type"){
+				data.sound.oscillator.type = data.type;
+			}
 		});
 		register("gain",function(data){
 			
