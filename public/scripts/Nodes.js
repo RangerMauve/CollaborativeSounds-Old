@@ -243,11 +243,11 @@ Nodes = (function(){
 			}
 		});
 		register("delaynode", function(data){
-			var delayTimeIn = data.element.querySelector(".gain");
+			var delayTimeIn = data.element.querySelector(".delay");
 			data.tosave.push("delay");
 			data.delay = delayTimeIn.value;
 			data.sound.delay = context.createDelayNode();
-			data.sound.delay.delayTime.value = data.delayTime;
+			data.sound.delay.delayTime.value = data.delay;
 			data.sound.delay.connect(data.sound.output);
 			data.sound.input.connect(data.sound.delay);
 
@@ -256,7 +256,7 @@ Nodes = (function(){
 				data.emitChange("delay", delayTimeIn.value);
 			});
 		},function(change, data){
-			if(change.attribute === "delayTimeIn"){
+			if(change.attribute === "delayTime"){
 				console.log(data.delay);
 				data.element.querySelector(".delay").value = data.gain;
 				data.element.querySelector(".curdelay").innerHTML = data.delay.toFixed(2);
@@ -269,7 +269,7 @@ Nodes = (function(){
 
 		},function(change,data){
 
-			
+
 		});
 	}
 	
