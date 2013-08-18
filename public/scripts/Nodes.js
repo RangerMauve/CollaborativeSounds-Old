@@ -20,6 +20,7 @@ Nodes = (function(){
 	}
 	
 	function remove(id){
+		if(list[id])
 		list[id].sound.output.disconnect();
 		var e = list[id].element;
 		e.parentElement.removeChild(e);
@@ -292,7 +293,8 @@ Nodes = (function(){
 			data.sound.input.connect(data.sound.delay);
 
 			$(delayTimeIn).change(function(){
-				data.delay = delayTimeIn.value;
+				console.log(delayTimeIn.value);
+				data.delay = +delayTimeIn.value;
 				data.emitChange("delay", delayTimeIn.value);
 			});
 		},function(change, data){
@@ -304,12 +306,88 @@ Nodes = (function(){
 			}
 
 		});
-		register("pannode", function(data){
-
-
+		register("splitter",function(data){
+			var outsel = data.element.querySelectorAll(".outputn");
+			$(outsel).mousedown(function(){
+				for(var i = 2; i < 5; i++){
+					data["output"+i]="none"
+					var tm = (data.sound["output"+i]= context.createGainNode());
+					console.log(tm);
+					tm.connect(data.sound.output);
+					data.sound.input.connect(tm);
+				}
+				console.log("Hovered");
+				var res = '<option></option><option value="null">none</option><option value="main">MainOutput</option>';
+				for(var k in list){
+					if(k !== data.id)
+						res += '<option value="'+k+'">'+k+"</option>";
+				}
+				this.innerHTML =res;
+			})
+			$(outsel).change(function(){
+				var cur = this.className.split(" ")[0];
+				data[cur] = this.value;
+				console.log(cur+": "+this.value);
+				data.emitChange(cur, this.value,"select");
+			});
 		},function(change,data){
-
-
+			if(change.attribute.indexOf("output") >= 0 && change.attribute!=="output"){
+				console.log(arguments);
+				var output = change.attribute;
+				var val = data[output];
+				if(!val || val==="none"){
+					data.sound[output].disconnect();
+				} else if(val==="main") {
+					data.sound[output].disconnect();
+					data.sound[output].connect(mainout);
+				} else if(list[val]) {
+					data.sound[output].disconnect();
+					data.sound[output].connect(tocon.input);
+				}
+			} if(change.attribute === "muted"){
+				if(change.value){
+					for(var i = 2; i < 5; i++){
+						var conname = data["output"+i];
+						var tocon = null;
+						if(conname in list)list[conname].sound.input;
+						if(conname ==="main")tocon == mainout;
+						if(conname !== "non" && conname !== "null"){
+							data.sound["output"+i].connect(tocon);
+						} else data.sound["output"+i].disconnect();
+					}
+				} else {
+					for(var i = 2; i < 5; i++){
+						data.sound["output"+i].disconnect();
+					}
+				}
+			}
+		});
+		register("attacknode",function(data){
+			data.tosave.push("attack");
+			var atcon = data.element.querySelector(".attack");
+			data.attack = atcon.value;
+			var conn = true;
+			var buf = context.createGainNode();
+			data.sound.input.connect(buf);
+			buf.connect(data.sound.output);
+			function alternate(){
+				conn = !conn;
+				if(conn){
+					console.log("switch");
+					buf.disconnect();
+				} else {
+					buf.connect(data.sound.output);
+				}
+				setTimeout(alternate,data.attack);
+			}
+			setTimeout(alternate,1000);
+			$(atcon).change(function(){
+				console.log(this.value);
+				data.attack = +this.value;
+				data.emitChange("attack",data.attack,"input");
+			});
+		},function(change,data){
+			
 		});
 	}
 	
