@@ -16,15 +16,20 @@ Room = (function(){
 					console.log("Join successful");
 					document.addEventListener("attrchange",onchanged);
 					document.addEventListener("create",oncreated);
+					document.addEventListener("removenode",onremoved);
 					function onchanged(evt){
 						socket.emit("attrchange",evt.detail);
 					}
 					function oncreated(evt){
 						socket.emit("ccreate",evt.detail.id,evt.detail.type);
 					}
+					function onremoved(evt){
+						socket.emit("cremove",evt.detail);
+					}
 					socket.on("disconnect",function(){
 						document.removeEventListener("attrchange",onchanged);
 						document.removeEventListener("create",oncreated);
+						document.removeEventListener("removenode",onremoved);
 						alert("Disconnected From Room");
 					});
 					socket.on("create",function(id,type){
@@ -37,6 +42,28 @@ Room = (function(){
 					});
 					socket.on("attrchange",function(detail){
 						Nodes.update(detail);
+					});
+					
+					var hassynced = false;
+					console.log("Requesting sync");
+					socket.emit("requestsync","please");
+					socket.on("answersync",function(data){
+						if(hassynced)return;
+						console.log("Sync request answered");
+						console.log(data);
+						console.log("Parsing data");
+						var nd = Nodes.createFrom(data);
+						console.log("Parsed data is:")
+						console.log(nd);
+						for(var i in nd)
+							$("#nodecont").append(nd[i]);
+						hassynced=true;
+					});
+					socket.on("requestsync",function(callback){
+						var data = Nodes.savedData();
+						console.log("Sending data");
+						console.log(data);
+						socket.emit("answersync",data);
 					});
 					
 					callback(null, {

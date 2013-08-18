@@ -16,6 +16,7 @@ module.exports = function(app, io){
 				);
 			var users = room.users;
 			var roomio = io.of("/room/"+room.id);
+			var hostsocket = null;
 			
 			roomio.on("connection",function(socket){
 				var user = null;
@@ -37,7 +38,8 @@ module.exports = function(app, io){
 						user = (users[name.toUpperCase()]={name:name, host:false });
 						if(!room.host){
 							user.host = true;
-							room.host = user.name;
+							room.host = user.name.toUpperCase();
+							hostsocket = socket;
 						}
 						socket.on("attrchange",function(change){
 							socket.broadcast.emit("attrchange",change);
@@ -48,12 +50,35 @@ module.exports = function(app, io){
 						socket.on("cremove",function(id){
 							socket.broadcast.emit("remove",id);
 						});
+						socket.on("requestsync",function(){
+							msg("requesting sync");
+							if(!user.host)
+								socket.broadcast.emit("requestsync");
+						});
+						socket.on("answersync",function(data){
+							socket.broadcast.emit("answersync",data);
+						});
 					} else {
 						var nname = "Spectator"+Math.floor(Math.random(1337)); 
 						user = (users[nname.toUpperCase()]={name:nname, host:false, spectating:true });			
 					}
 					socket.broadcast.emit("joinedroom",user.name);
 					socket.on("disconnect",function(){
+						if(user.name.toUpperCase() == room.host){
+							var hadsome;
+							for(var key in users){
+								hadsome = true;
+								if(users[key] != user){
+									room.host = key.toUpperCase();
+									hostsocket=socket;
+									users[key].host = true;
+								}
+							}
+							if(!hadsome){
+								room.host=null;
+								hostsocket=null;
+							}
+						}
 						delete users[user.name.toUpperCase()]
 						socket.broadcast.emit("leftroom",user.name);
 					});

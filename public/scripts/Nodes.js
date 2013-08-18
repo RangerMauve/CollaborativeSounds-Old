@@ -24,7 +24,7 @@ Nodes = (function(){
 		var e = list[id].element;
 		e.parentElement.removeChild(e);
 		delete list[id]
-		document.dispatchEvent(new CustomEvent("removenode")
+		document.dispatchEvent(new CustomEvent("removenode",{detail:id}));
 	}
 	
 	function register(name, init, onchange){
@@ -50,15 +50,56 @@ Nodes = (function(){
 		}
 	}
 	
+	function createFrom(data){
+		if(data instanceof Array){
+			var res = [];
+			for(var i = 0; i < data.length; i++){
+				var cures = createFrom(data[i])
+				res.push(cures);
+			}
+			return res;
+		} else {
+			var res = create(data.nodetype,data.id);
+			for(var key in data){
+				res.dispatchEvent(
+					new CustomEvent("attrchange",{
+						detail:{
+							id:data.id,
+							attribute:key,
+							value:data[key]
+						},
+						bubbles:false
+					}
+				));
+			}
+			return res;
+		}
+	}
+	
+	function savedData(){
+		var res = [];
+		for(var key in list){
+			var cres = {};
+			var data = list[key];
+			for(var key2 in data){
+				if(data.tosave.indexOf(key2) >= 0){
+					cres[key2] = data[key2];
+				}
+			}
+			res.push(cres);
+		}
+		return res;
+	}
+	
 	function create(name, gid){
-		console.log(arguments);
 		var nodeData = {};
 		var cont = document.createElement("div");
 		var nid = gid || "Node"+ranString(4);
 		nodeData.id = nid;
 		nodeData.element = cont;
+		nodeData.nodetype = name;
 		cont.id = nid;
-		nodeData.tosave = [];
+		nodeData.tosave = ["nodetype"];
 		nodeData.emit = function(name, data){
 			cont.dispatchEvent(new CustomEvent(name,{
 				detail:data,
@@ -77,7 +118,6 @@ Nodes = (function(){
 		
 		nodeData.update = function(attribute,value, type){
 			var at = cont.querySelector("."+attribute);
-			if(!at)console.log(arguments);
 			if(type === "text"){
 				at.innerHTML = value;
 			} else if(attribute==="position"){
@@ -162,7 +202,6 @@ Nodes = (function(){
 		}, function(changed,data){
 			var d = false;
 			if(changed.attribute === "muted" || changed.attribute === "output"){
-				console.log(arguments);
 				if(data.muted){
 					data.sound.output.disconnect();
 				} else {
@@ -280,6 +319,8 @@ Nodes = (function(){
 		},
 		register:register,
 		create:create,
+		createFrom:createFrom,
+		savedData:savedData,
 		init:init,
 		get list(){return list;},
 		clear:clearList,

@@ -83,5 +83,7 @@ function login () {
 	var username = document.getElementById("username").value;
 	if(spectating && !username)
 		username = "Anon"+Math.floor(Math.random()*1337);
-	initRoom("lobby",username);
+	var room = document.getElementById("roomname").value;
+	room = room || "lobby";
+	initRoom(room,username);
 }
