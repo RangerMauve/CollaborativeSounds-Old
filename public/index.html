@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <head>
 	<title>Collaborative Sounds</title>
-	<link rel="stylesheet" type="text/css" href="stylesheets/index.css"> 
+	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css"> 
 	<link rel="stylesheet" href="/stylesheets/nodes.css">
-	<script src="scripts/jquery.js"></script> 
+	<script src="/scripts/jquery.js"></script>
+	<script src="/scripts/jquery-ui-1.10.3.custom.js"></script>	
     <script src="/socket.io/socket.io.js"></script>
     <script src="/scripts/Chat.js"></script>
-	<script src="/scripts/jquery-ui-1.10.3.custom.js"></script>
 	<script src="/scripts/Nodes.js"></script>
+	<script src="/scripts/Room.js"></script>
 </head>
 <body>
 	<div id = "participate" class="blurOutline">
@@ -109,7 +110,9 @@
 		<div>
 			Gain:
 			<span class="curgain">1</span>
-			<input class="gain" type="range" min="0" max="1" value="1" step="0.1"/>
+			<div>
+				<input class="gain" type="range" min="0" max="1" value="1" step="0.1"/>
+			</div>
 		</div>		
 	</div>
 	<!-- Gain End -->
