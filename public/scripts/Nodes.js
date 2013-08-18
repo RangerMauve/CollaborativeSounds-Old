@@ -13,10 +13,14 @@ Nodes = (function(){
 	function clearList(){
 		var key,e;
 		for(var key in list){
-			e = list[key].element;
-			e.parentElement.removeChild(e);
+			
 		}
-		list = [];
+	}
+	
+	function remove(id){
+		var e = list[id].element;
+		e.parentElement.removeChild(e);
+		delete list[id]
 	}
 	
 	function register(name, structure, init){

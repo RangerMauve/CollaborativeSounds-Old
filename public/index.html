@@ -10,7 +10,7 @@
 	<script src="/scripts/Nodes.js"></script>
 </head>
 <body>
-	<span id="nodedefs">
+<span id="nodedefs">
 	<!-- Default Node -->
 	<div id="default" class="node">
 		<div class= "id"></div>
@@ -49,7 +49,7 @@
 		</div>
 	</div>
 	<!-- End Oscilaltor -->
-	</span>
+</span>
 	<div id = "participate">
 		<button
 			onclick="$('#participate').hide();$('#loggin').show();"
@@ -64,12 +64,16 @@
 	</div>
 	<div id = "loggin" style = "display:none;">
 		Username:
-		<input	type = "text" id="username"/>
-		<br/>
+		<div>
+			<input	type = "text" id="username"/>
+		</div>
 		Room:
-		<input	type = "text" id="roomname"/>
-		<br/>
-		<button onclick="login();">Go</button>
+		<div>
+			<input	type = "text" id="roomname"/>
+		</div>
+		<div>
+			<button onclick="login();">Go</button>
+		</div>
 	</div>
 	<div id="chatwrap" class="blurOutline">
 		<div id = "chat">

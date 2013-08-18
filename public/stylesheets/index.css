@@ -1,14 +1,17 @@
 #participate {
 	width: 100px;
-	padding: 70px 0 0 0;
-	margin: 0 auto 0 auto;
+	margin: 70px auto 0;
 	background:#DDD;
+	text-align:center;
 }
 #loggin {
 	width: 200px;
-	padding: 70px 0 0 0;
-	margin: 0 auto 0 auto;
+	margin: 70px auto 0;
+	padding:2px;
 	background:#DDD;
+}
+#loggin > div {
+	text-align:center;
 }
 .blurOutline{
 	-moz-box-shadow: 1px 4px 6px 6px rgba(225,225,225,0.5);
