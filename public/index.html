@@ -127,10 +127,61 @@
 	<div id="pannode" class="pannode">
 		<div>
 			Pan:
-
+			<span class="curpan">0.5</span>
+			<div>
+				<input class="pan" type="range" min="0" max="1" value="0.5" step="0.1"/>
+			</div>
 		</div>
 	</div>
 	<!-- Pan End -->
+	<!-- Convoluter -->
+	<div id="convoluter" class="convoluter">
+		<div>
+			Convoloute:
+			<input class="dconvolute" type="select">
+				<option value="foo">Foo</option>
+			</input>
+		</div>
+	</div>
+	<!-- Convoluter End -->
+	<!-- Passfilter -->
+	<div id="passfilter" class="passfilter">
+		<div>
+			Frequency:<span class="curpfrequency">200</span>
+			<input class="pfrequency" type="range" min="40" max="2000" value="200"/>
+		</div>
+		<div>
+			Q:<span class="curq">1</span>
+			<input class="q" type="range" min="0" max="1000" value="200"/>
+		</div>
+		<div>
+			Gain:<span class="curpgain">1</span>
+			<div>
+				<input class="pgain" type="range" min="-40" max="40" value="0" step="1"/>
+			</div>			
+		</div>
+		<div>
+			<input class="dpassfilter" type="select">
+				<option value="lowpass">lowpass</option>
+				<option value="highpass">highpass</option>
+				<option value="bandpass">bandpass</option>
+				<option value="lowshelf">lowshelf</option>
+				<option value="highshelf">highshelf</option>
+				<option value="peaking">peaking</option>
+				<option value="notch">notch</option>
+				<option value="allpass">allpass</option>
+			</input>
+		</div>
+	</div>
+	<!-- Passfilter End -->
+	<!-- Wavenode -->
+	<div id="wavenode" class="wavenode">
+		<div>
+			Wave:
+
+		</div>
+	</div>
+	<!-- Wavenode End -->
 </span>
 	<script src="/scripts/index.js"></script>
 </body>
