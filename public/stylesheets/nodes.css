@@ -1,7 +1,9 @@
 #nodedefs {
 	display:none;
 }
-
+#nodecont {
+	position:absolute;
+}
 .node {
 	padding:10px;
 	min-height:40px;

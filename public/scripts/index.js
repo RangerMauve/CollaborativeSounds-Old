@@ -26,7 +26,7 @@ function initChat(username){
 		
 		controls.onmessage= function(name,message){
 			append("<div>"+name+': <span class="usermessage">'+message+"</span></div>");
-               
+			$(out).animate({scrollTop:out.scrollHeight}, 1000);
 		}; 
 	});
 }
