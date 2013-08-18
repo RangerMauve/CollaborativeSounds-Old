@@ -1,7 +1,11 @@
+html {
+	background:#FAFAFA;
+}
 #participate {
 	width: 100px;
 	margin: 70px auto 0;
 	text-align:center;
+	padding:30px;
 }
 #loggin {
 	display:none;

@@ -49,10 +49,10 @@ Nodes = (function(){
 		}
 	}
 	
-	function create(name){
+	function create(name, id){
 		var nodeData = {};
 		var cont = document.createElement("div");
-		var nid = "Node"+ranString(4);
+		var nid = id || "Node"+ranString(4);
 		while(document.getElementById(nid))
 			nid = "Node"+ranString(4);
 		nodeData.id = nid;
@@ -264,34 +264,6 @@ Nodes = (function(){
 			}
 
 		});
-		register("pannode", function(data){
-
-			
-		},function(change, data){
-
-
-		});
-		register("convoluter", function(data){
-
-			
-		},function(change, data){
-
-
-		});
-		register("passfilter", function(data){
-
-			
-		},function(change, data){
-
-
-		});
-		register("wavenode", function(data){
-
-			
-		},function(change, data){
-
-
-		});
 	}
 	
 	return {
@@ -303,6 +275,7 @@ Nodes = (function(){
 		init:init,
 		get list(){return list;},
 		clear:clearList,
-		remove:remove
+		remove:remove,
+		update:update
 	}
 })();
