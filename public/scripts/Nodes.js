@@ -20,6 +20,7 @@ Nodes = (function(){
 	}
 	
 	function remove(id){
+		list[id].sound.output.disconnect();
 		var e = list[id].element;
 		e.parentElement.removeChild(e);
 		delete list[id]
@@ -154,9 +155,11 @@ Nodes = (function(){
 					if(!val || val==="none"){
 						data.sound.output.disconnect();
 					} else if(val==="main") {
+						data.sound.output.disconnect();
 						data.sound.output.connect(mainout);
-					} else {
+					} else if(list[val]) {
 						var tocon = list[val].sound;
+						data.sound.output.disconnect();
 						data.sound.output.connect(tocon.input);
 					}
 				}
@@ -180,7 +183,6 @@ Nodes = (function(){
 			$(e.querySelector(".frequency")).change(function(){
 				data.frequency = +this.value;
 				data.emitChange("frequency",this.value,"range");
-				data.emitChange("curfrequency",this.value,"text");
 			});
 			$(e.querySelector(".type")).change(function(){
 				data.type = this.value;
@@ -206,8 +208,26 @@ Nodes = (function(){
 				data.sound.oscillator.type = data.type;
 			}
 		});
-		register("gain",function(data){
+		register("gainnode",function(data){
+			var gainin = data.element.querySelector(".gain");
+			data.tosave.push("gain");
+			data.gain = gainin.value;
+			data.sound.gain = context.createGainNode();
+			data.sound.gain.gain.value=data.gain;
+			data.sound.gain.connect(data.sound.output);
+			data.sound.input.connect(data.sound.gain);
 			
+			$(gainin).change(function(){
+				data.gain = +gainin.value;
+				data.emitChange("gain",gainin.value);
+			});
+		},function(change,data){
+			if(change.attribute === "gain"){
+				console.log(data.gain);
+				data.element.querySelector(".gain").value=data.gain;
+				data.element.querySelector(".curgain").innerHTML=data.gain.toFixed(2);
+				data.sound.gain.gain.value=data.gain;
+			}
 		});
 	}
 	
