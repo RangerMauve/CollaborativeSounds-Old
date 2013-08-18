@@ -30,7 +30,7 @@ Room = (function(){
 						document.removeEventListener("attrchange",onchanged);
 						document.removeEventListener("create",oncreated);
 						document.removeEventListener("removenode",onremoved);
-						alert("Disconnected From Room");
+						//alert("Disconnected From Room");
 					});
 					socket.on("create",function(id,type){
 						if(oncreate instanceof Function)

@@ -23,12 +23,11 @@ Chat = (function(){
 						message:function(message,callback){
 							if(!(callback instanceof Function))
 								callback = function(err){if(err)console.log(room+":Error:"+err)};
-							socket.emit("message",message,callback);
-						},
-						rename: function(newname,callback){
-							if(!(callback instanceof Function))
-								callback = function(err){if(err)console.log(room+":Error:"+err)};
-							socket.emit("rename",newname, callback);
+							if(message.charAt(0) === "/"){
+								socket.emit("command", message.split(" "), callback);
+							} else {
+								socket.emit("message",message,callback);
+							}
 						},
 						disconnect:function(){
 							socket.disconnect();
@@ -40,7 +39,7 @@ Chat = (function(){
 					});
 					socket.on("renamed",function(oldname, newname){
 						if(dorename instanceof Function)dorename(oldname, newname);
-						else console.log(room+": "+name+" is now "+newname);
+						else console.log(room+": "+oldname+" is now "+newname);
 					});
 					socket.on("disconnect",function(){
 						if(dodc instanceof Function) dodc();
