@@ -19,9 +19,7 @@
 				name = "listen"
 				value = "just listen"
 				onclick = " $('#participate').hide();
-							$('#chat').show();
-							$('#workspace').show()
-							$('#spawn').show();;" />
+							login();" />
 	</div>
 	<div	id = "loggin"
 			style = "display:none;">
@@ -40,9 +38,6 @@
 				name = "blogin"
 				value = "go"
 				onclick = " $('#loggin').hide();
-							$('#chat').show();
-							$('#workspace').show();
-							$('#spawn').show();
 							login();" />
 	</div>
 	<div	id = "chat"
@@ -99,7 +94,15 @@
 			out.innerHTML+=message;
 		}
 		function login () {
+			$('#chat').show();
+			$('#workspace').show
+			$('#spawn').show();
+
 			var username = document.getElementById("user").value;
+
+			if (username == "") {
+				username = "User"+Math.floor(Math.random()*1337);
+			}
 
 			Chat.connect("test", username, function(err,controls){
 				if(err)append('<div style="color:#F00">Error:'+err+'</div>');
