@@ -41,7 +41,7 @@ module.exports = function(app, io){
 						user = {name:name};
 						users[name.toUpperCase()]= user;
 						msg("joined");
-						chatio.emit("message", name, " joined the room");
+						chatio.emit("message", "System", user.name+" joined the room");
 						socket.on("message",function(message, callback){
 							msg("says:"+message);
 							if(!message){
@@ -72,7 +72,7 @@ module.exports = function(app, io){
 						});
 						socket.on("disconnect",function(){
 							msg("left");
-							chatio.emit("message","System",user.name+" left the chat");
+							chatio.emit("message","System",user.name+" left the room");
 							delete users[user.name.toUpperCase()];
 						});
 						if(callback instanceof Function)callback(null);

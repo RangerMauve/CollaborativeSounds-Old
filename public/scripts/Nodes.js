@@ -242,11 +242,33 @@ Nodes = (function(){
 			}
 		});
 		register("delaynode", function(data){
+			var delayTimeIn = data.element.querySelector(".gain");
+			data.tosave.push("delay");
+			data.delay = delayTimeIn.value;
+			data.sound.delay = context.createDelayNode();
+			data.sound.delay.delayTime.value = data.delayTime;
+			data.sound.delay.connect(data.sound.output);
+			data.sound.input.connect(data.sound.delay);
+
+			$(delayTimeIn).change(function(){
+				data.delay = +delayTimeIn.value;
+				data.emitChange("delay", delayTimeIn.value);
+			});
+		},function(change, data){
+			if(change.attribute === "delayTimeIn"){
+				console.log(data.delay);
+				data.element.querySelector(".delay").value = data.gain;
+				data.element.querySelector(".curdelay").innerHTML = data.delay.toFixed(2);
+				data.sound.delay.delayTime.value = data.delay;
+			}
+
+		});
+		register("pannode", function(data){
+
+
+		},function(change,data){
 
 			
-		},function(change, data){
-
-
 		});
 	}
 	

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
 	<title>Collaborative Sounds</title>
-	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css"> 
+	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
 	<link rel="stylesheet" href="/stylesheets/nodes.css">
 	<script src="/scripts/jquery.js"></script>
-	<script src="/scripts/jquery-ui-1.10.3.custom.js"></script>	
+	<script src="/scripts/jquery-ui-1.10.3.custom.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/scripts/Chat.js"></script>
 	<script src="/scripts/Nodes.js"></script>
@@ -75,7 +75,7 @@
 		<div>
 			Frequency:
 			<span class="curfrequency">200</span>
-			<input class="frequency" type="range" min="40" max="1000" value="200"/>
+			<input class="frequency" type="range" min="40" max="2000" value="200"/>
 		</div>
 		<div>
 			Type:
@@ -109,10 +109,21 @@
 	<div id="delaynode" class="delaynode">
 		<div>
 			Delay:
-
+			<span class="curdelay">0</span>
+			<div>
+				<input class="delay" type="range" min="0" max="10" value="0" step="0.1"/>
+			</div>
 		</div>
 	</div>
 	<!-- Delay End -->
+	<!-- Pan -->
+	<div id="pannode" class="pannode">
+		<div>
+			Pan:
+
+		</div>
+	</div>
+	<!-- Pan End -->
 </span>
-	<script src="/scripts/index.js"></script> 
+	<script src="/scripts/index.js"></script>
 </body>
