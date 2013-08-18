@@ -253,13 +253,13 @@ Nodes = (function(){
 			data.sound.input.connect(data.sound.delay);
 
 			$(delayTimeIn).change(function(){
-				data.delay = +delayTimeIn.value;
+				data.delay = delayTimeIn.value;
 				data.emitChange("delay", delayTimeIn.value);
 			});
 		},function(change, data){
 			if(change.attribute === "delayTime"){
 				console.log(data.delay);
-				data.element.querySelector(".delay").value = data.gain;
+				data.element.querySelector(".delay").value = data.delay;
 				data.element.querySelector(".curdelay").innerHTML = data.delay.toFixed(2);
 				data.sound.delay.delayTime.value = data.delay;
 			}
