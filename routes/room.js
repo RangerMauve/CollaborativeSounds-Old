@@ -46,9 +46,9 @@ module.exports = function(app, io){
 							socket.broadcast.emit("create",id,type);
 						});
 					} else {
-						user.spectating = true;
+						var nname = "Spectator"+Math.floor(Math.random(1337)); 
+						user = (users[nname.toUpperCase()]={name:nname, host:false, spectating:true });			
 					}
-					user.name = name || "Spectator"+Math.floor(Math.random(1337));
 					socket.broadcast.emit("joinedroom",user.name);
 					socket.on("disconnect",function(){
 						delete users[user.name.toUpperCase()]
