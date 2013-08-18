@@ -8,7 +8,7 @@ var express = require('express'),
 
 // all environments
 app.set('ip', process.env.OPENSHIFT_NODEJS_IP);
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 8080);
+app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 80);
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(app.router);

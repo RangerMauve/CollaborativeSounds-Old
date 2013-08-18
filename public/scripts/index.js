@@ -6,7 +6,11 @@ function initChat(username){
 	}
 
 	Chat.connect("lobby", username, function(err,controls){
-		if(err)append('<div style="color:#F00">Error:'+err+'</div>');
+		controls.onmessage= function(name,message){
+			append("<div>"+name+': <span class="usermessage">'+message+"</span></div>");
+			$(out).animate({scrollTop:out.scrollHeight}, 1000);
+		}; 
+		if(err)return append('<div style="color:#F00">Error:'+err+'</div>');
 		
 		$("#chatinput").keyup(function(e){
 			if(e.which == 13)
@@ -22,11 +26,6 @@ function initChat(username){
 				else $("#chatinput").val("");
 			});
 		});
-		
-		controls.onmessage= function(name,message){
-			append("<div>"+name+': <span class="usermessage">'+message+"</span></div>");
-			$(out).animate({scrollTop:out.scrollHeight}, 1000);
-		}; 
 	});
 }
 function login () {
