@@ -2,15 +2,26 @@ var rooms = {};
 
 module.exports = function(app, io){
 	app.get("/room/request/:id",function(req,res){
-		if(req.params.id in rooms){
+		if(req.params.id.toUpperCase() in rooms){
 			res.json({success:true,message:"Room Exists"});
 		} else {
-			var room = (rooms[req.params.id]={id:req.params.id,users:{},host:null,active:false });
+			var room = (
+				rooms[req.params.id.toUpperCase()]=
+					{
+						id:req.params.id,
+						users:{},
+						host:null,
+						active:false
+					}
+				);
 			var users = room.users;
 			var roomio = io.of("/room/"+room.id);
 			
 			roomio.on("connection",function(socket){
 				var user = null;
+				function msg(msg){
+					console.log(room+": "+ user.name || ""+": "+msg);
+				}
 				socket.on("join",function(cred,callback){
 					var name = cred.name;
 					var pass = cred.password;
@@ -31,11 +42,13 @@ module.exports = function(app, io){
 						socket.on("create", function(id, type){
 							socket.broadcast.emit("create",id,type);
 						});
+					} else {
+						user.spectating = true;
 					}
-					name = name || "Spectator"+Math.floor(Math.random(1337));
-					socket.broadcast.emit("joinedroom",name);
+					user.name = name || "Spectator"+Math.floor(Math.random(1337));
+					socket.broadcast.emit("joinedroom",user.name);
 					socket.on("disconnect",function(){
-						socket.broadcast.emit("leftroom",name);
+						socket.broadcast.emit("leftroom",user.name);
 					});
 				});
 			});
@@ -43,4 +56,18 @@ module.exports = function(app, io){
 			res.json({success:true,message:"Room Created"});
 		}
 	});
-}
+	app.get("/room/info/:id",function(req,res){
+		if(req.params.id.toUpperCase() in rooms){
+			res.json({
+				success:true,
+				message:"Room Found",
+				room:rooms[req.params.id.toUpperCase()]
+			});
+		} else {
+			res.json({error:true,message:"Room Not Registered"});
+		}
+	});
+	app.get("/rooms/info",function(req,res){
+		res.json({success:true,message:"Rooms found",rooms:rooms});
+	});
+};
