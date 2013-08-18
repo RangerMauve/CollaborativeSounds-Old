@@ -41,6 +41,7 @@ module.exports = function(app, io){
 						user = {name:name};
 						users[name.toUpperCase()]= user;
 						msg("joined");
+						chatio.emit("message", name, " joined the room");
 						socket.on("message",function(message, callback){
 							msg("says:"+message);
 							if(!message){
