@@ -279,7 +279,7 @@ Nodes = (function(){
 		},function(change,data){
 			if(change.attribute === "gain"){
 				data.element.querySelector(".gain").value=+data.gain;
-				data.element.querySelector(".curgain").innerHTML=+data.gain.toFixed(2);
+				data.element.querySelector(".curgain").innerHTML=+data.gain;
 				data.sound.gain.gain.value=data.gain;
 			}
 		});
@@ -301,7 +301,7 @@ Nodes = (function(){
 			if(change.attribute === "delayTime"){
 				console.log(data.delay);
 				data.element.querySelector(".delay").value = data.delay;
-				data.element.querySelector(".curdelay").innerHTML = data.delay.toFixed(2);
+				data.element.querySelector(".curdelay").innerHTML =+data.delay;
 				data.sound.delay.delayTime.value = data.delay;
 			}
 

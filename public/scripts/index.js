@@ -76,7 +76,7 @@ function initRoom(room,username){
 			if(!spectating)
 				$('#spawn').show().draggable();
 		});
-	})
+	});
 }
 function login () {
 	console.log("Logging in");

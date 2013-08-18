@@ -42,6 +42,15 @@ module.exports = function(app, io){
 						users[name.toUpperCase()]= user;
 						msg("joined");
 						chatio.emit("message", "System", user.name+" joined the room");
+						curchat.buffer.reverse();
+						curchat.buffer.forEach(function(message, index, array){
+							if(message[0] !== null){
+								setTimeout(function(){
+									socket.emit("message", message[0], message[1]);
+								}, 250);
+							}
+						});
+						curchat.buffer.reverse();
 						socket.on("message",function(message, callback){
 							msg("says:"+message);
 							if(!message){
@@ -58,7 +67,21 @@ module.exports = function(app, io){
 								if(callback instanceof Function)callback("Spam");
 							}
 						});
-						socket.on("rename",function(newname,callback){
+						socket.on("command",function(args,callback){
+							if(args[0] === "/name" && (typeof args[1] === "string")){
+								rename(args[1], callback);
+							} else if(
+								args[0] === "/help" ||
+								args[0] === "/h" ||
+								args[0] === "/?"
+							){
+								socket.emit("message", "Commands", "<br>/name NewName <br>/list");
+							} else if (args[0] === "/list") {
+								var us = users;
+								socket.emit("message", "Users", users.value);
+							}
+						});
+						rename = function(newname,callback){
 							msg("rename attempt to "+newname);
 							if(newname.toUpperCase() in users){
 								if(callback instanceof Function)callback("NameRegistered");
@@ -69,7 +92,7 @@ module.exports = function(app, io){
 								socket.broadcast.emit("renamed",user.name, newname);
 								if(callback instanceof Function)callback(null);
 							}
-						});
+						};
 						socket.on("disconnect",function(){
 							msg("left");
 							chatio.emit("message","System",user.name+" left the room");
