@@ -20,10 +20,9 @@ Nodes = (function(){
 	}
 	
 	function remove(id){
-		if(list[id])
-		list[id].sound.output.disconnect();
-		var e = list[id].element;
+		var e = document.getElementById(id);
 		e.parentElement.removeChild(e);
+		if(list[id])list[id].sound.output.disconnect();
 		delete list[id]
 		document.dispatchEvent(new CustomEvent("removenode",{detail:id}));
 	}
