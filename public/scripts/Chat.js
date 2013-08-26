@@ -4,7 +4,7 @@ Chat = (function(){
 		$.getJSON("/chat/request/"+room,function(data){
 			if(!data.success)return callback("Failed");
 			var socket = null;
-			socket = io.connect("ws://collsounds-nullset.rhcloud.com:8000/chat/"+room,{reconnect: false});
+			socket = io.connect("/chat/"+room,{reconnect: false});
 			
 			socket.on("connect",function(){
 				socket.emit("join",name,function(err){

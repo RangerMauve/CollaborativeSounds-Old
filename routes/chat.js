@@ -1,6 +1,7 @@
 var chats = {};
 var maxlen = 200;
 var wait = 1000;
+var maxchat = 20;
 
 function filterMsg(message){
 	if(message.length > maxlen)
@@ -17,8 +18,7 @@ module.exports = function(app, io){
 			res.json({success:true,message:"Chat exists"});
 		} else {
 			console.info("Creating chat "+req.params.id);
-			chats[req.params.id] = {id:req.params.id,buffer:[],users:{SYSTEM:{}}};
-			var curchat = chats[req.params.id];
+			var curchat = (chats[req.params.id] = {id:req.params.id,buffer:[],users:{SYSTEM:{}}});
 			var users = curchat.users;
 			var chatio = io.of("/chat/"+curchat.id);
 			chatio.on("connection",function(socket){
@@ -42,15 +42,9 @@ module.exports = function(app, io){
 						users[name.toUpperCase()]= user;
 						msg("joined");
 						chatio.emit("message", "System", user.name+" joined the room");
-						curchat.buffer.reverse();
-						curchat.buffer.forEach(function(message, index, array){
-							if(message[0] !== null){
-								setTimeout(function(){
-									socket.emit("message", message[0], message[1]);
-								}, 250);
-							}
+						curchat.buffer.length.forEach(function(val){
+							socket.emit("message",val[0], val[1]);
 						});
-						curchat.buffer.reverse();
 						socket.on("message",function(message, callback){
 							msg("says:"+message);
 							if(!message){
@@ -58,10 +52,8 @@ module.exports = function(app, io){
 							} else if(wait < Date.now() - lastChat){
 								lastChat = Date.now();
 								chatio.emit("message", name, filterMsg(message));
-								curchat.buffer.reverse();
-								curchat.buffer.push([name, message]);
-								curchat.buffer.reverse();
-								curchat.buffer.length = 20;
+								curchat.buffer.push([name,filterMsg(message)]);
+								if(curchat.buffer.length > maxchat)curchat.buffer.shift();
 								if(callback instanceof Function)callback(null);
 							} else {
 								if(callback instanceof Function)callback("Spam");
@@ -81,7 +73,7 @@ module.exports = function(app, io){
 								socket.emit("message", "Users", users.value);
 							}
 						});
-						rename = function(newname,callback){
+						function rename(newname,callback){
 							msg("rename attempt to "+newname);
 							if(newname.toUpperCase() in users){
 								if(callback instanceof Function)callback("NameRegistered");
@@ -89,6 +81,8 @@ module.exports = function(app, io){
 								delete users[user.name.toUpperCase()];
 								users[newname.toUpperCase()] = user;
 								chatio.emit("message","System",user.name+" is now "+newname);
+								curchat.buffer.push(["system",user.name+" is now "+newname]);
+								if(curchat.buffer.length > maxchat)curchat.buffer.shift();
 								socket.broadcast.emit("renamed",user.name, newname);
 								if(callback instanceof Function)callback(null);
 							}

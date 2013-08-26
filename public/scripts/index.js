@@ -61,7 +61,7 @@ function initRoom(room,username){
 			return alert("Error:"+err);
 		}
 		console.log("Room connected");
-		initChat("lobby",username,function(err,chat){
+		initChat(room,username,function(err,chat){
 			if(err){
 				console.error(err);
 				return alert("Error:"+err);
